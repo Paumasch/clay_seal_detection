@@ -1,0 +1,51 @@
+/* super basic placeholders */
+
+body {
+  margin: 1rem;
+  font-family: sans-serif;
+}
+
+main {
+  max-width: 50rem;
+  margin: 0 auto;
+}
+
+button,
+.button {
+  display: inline-block;
+  margin: 0.5rem 0;
+  padding: 0.6rem 1rem;
+  font: inherit;
+}
+
+.guide-image {
+  display: block;
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  margin: 1rem 0;
+}
+
+.camera-placeholder {
+  min-height: 12rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid currentColor;
+  margin: 1rem 0;
+}
+
+.language-area {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+#languageMessage {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  border: 1px solid currentColor;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 1rem;
+}
