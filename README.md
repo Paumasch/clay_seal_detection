@@ -3,29 +3,10 @@ Simple webpage interface for ~~object~~ seal detection
 
 try to roughly follow [semantic versioning guidelines](https://semver.org/) 
 
-# v0.1.0
 
-Minimal two-page prototype.
+## try it live
 
-## current scope
-
-Placeholders! Placeholders, everywhere!
-
-- separate welcome and application pages
-- placeholder visual guide
-- placeholder language selector interaction
-- English string table with Danish and Kalaallisut placeholders
-- application UI states/elements
-- placeholder detector interface
-- no camera access yet
-- no real detection yet
-- minimal CSS
-
-## one particularity to explain (and potentially deal with later)
-
-Even though we define a central and authoritative place for our text strings, there's still duplicates in the html files.  
-No one likes that. Introduces potential synchronisation issues.
-I'll have to ponder this, but it might be helpful/necessary to keep them as fallbacks for when js might fail to load, or to not mess with search engines or accessibility tools.
+The current version is deployed via GitHub Pages: `https://smitzkar.github.io/seals/`
 
 ## run locally
 
@@ -46,14 +27,46 @@ to test on phone:
         - look for `Wireless Lan adapter` and the corresponding IPv4 Address 
 - open browser and visit `http://<your.computer's.ip.address>`
 
-## immediate follow-up todo's
 
--[x] actually get it running independently on the phone
-set up github pages smitzkar.github.io/seals/index.html 
-added service worker (sw.js, register-sw.js) and manifest.json to handle offline, app-like behaviour 
-// IMPORTANT: changes in CACHE_NAME trigger local updates (doesn't manually check if file content changed)
-//            -> if changing anything on server, don't forget to update the version (in sw.js)
+## update checklist
 
-## Version
+When shipping a new version, remember to bump `CACHE_NAME` in `sw.js` to
+match — otherwise installed/offline copies of the app won't pick up changes.
 
-v0.1.0
+## one particularity to explain (and potentially deal with later)
+
+Even though we define a central and authoritative place for our text strings, there's still duplicates in the html files.  
+No one likes that. Introduces potential synchronisation issues.
+I'll have to ponder this, but it might be helpful/necessary to keep them as fallbacks for when js might fail to load, or to not mess with search engines or accessibility tools.
+
+## Changelog
+
+### v0.2.1
+- Fixed a stale-cache bug where service-worker installation could pull already-cached (outdated) asset bytes from the browser's ordinary HTTP cache instead of the network; install now forces a network reload for every cached file.
+
+### v0.2.0
+- Added `manifest.json` and a service worker (`sw.js`), making the app installable ("Add to Home Screen") and fully offline-capable after first visit — confirmed working via GitHub Pages on both Android (Firefox) and desktop.
+- Deployed via GitHub Pages for easy sharing / cross-device testing.
+
+
+### v0.1.0
+
+Minimal two-page prototype.
+
+#### current scope
+
+Placeholders! Placeholders, everywhere!
+
+- separate welcome and application pages
+- placeholder visual guide
+- placeholder language selector interaction
+- English string table with Danish and Kalaallisut placeholders
+- application UI states/elements
+- placeholder detector interface
+- no camera access yet
+- no real detection yet
+- minimal CSS
+
+# Version
+
+v0.2.1
