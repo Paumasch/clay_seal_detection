@@ -48,7 +48,11 @@ to test on phone:
 
 ## immediate follow-up todo's
 
--[] actually get it running independently on the phone
+-[x] actually get it running independently on the phone
+set up github pages smitzkar.github.io/seals/index.html 
+added service worker (sw.js, register-sw.js) and manifest.json to handle offline, app-like behaviour 
+// IMPORTANT: changes in CACHE_NAME trigger local updates (doesn't manually check if file content changed)
+//            -> if changing anything on server, don't forget to update the version (in sw.js)
 
 ## Version
 

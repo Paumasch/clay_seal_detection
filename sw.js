@@ -12,7 +12,7 @@
 // IMPORTANT: changes in CACHE_NAME trigger local updates (doesn't manually check if file content changed)
 //            -> if changing anything on server, don't forget to update the version
 
-const CACHE_NAME = "seal-counter-v0.1.0";
+const CACHE_NAME = "seal-counter-v0.2.0";
 
 const CACHED_URLS = [
   "./",
