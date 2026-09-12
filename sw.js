@@ -1,7 +1,7 @@
 // service worker to ensure offline access / functionality
 //
 // events
-// "install"    : fires once, when the browser sees this service worker (or a changed version of it) 
+// "install"    : fires once, when the browser sees this service worker (or a changed version of it (CACHE_NAME specifically)) 
 //                essentially tells the browser to download and store the specified files in persistent cache
 // "activate"   : fires when isntall is done, 
 //                checks cached files and deletes any that are no longer specified (cleanup of stale files) 
@@ -10,9 +10,9 @@
 //                if not, actually run a fetch request
 //
 // IMPORTANT: changes in CACHE_NAME trigger local updates (doesn't manually check if file content changed)
-//            -> if changing anything on server, don't forget to update the version
+//            -> if changing anything on server, don't forget to update the version to force cache updates
 
-const CACHE_NAME = "seal-counter-v0.2.0";
+const CACHE_NAME = "seal-counter-v0.2.1";
 
 const CACHED_URLS = [
   "./",
@@ -26,9 +26,28 @@ const CACHED_URLS = [
   "./assets/visual-guide-placeholder.svg"
 ];
 
+// self.addEventListener("install", (event) => {
+//   event.waitUntil(
+//     caches.open(CACHE_NAME).then((cache) => cache.addAll(CACHED_URLS))
+//   );
+//   self.skipWaiting();
+// });
+
+// now forces a reload on event firing -> forces actual check for changes, instead of relying on http cache
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(CACHED_URLS))
+    caches.open(CACHE_NAME).then((cache) =>
+      Promise.all(
+        CACHED_URLS.map((url) =>
+          fetch(url, { cache: "reload" }).then((response) => {
+            if (!response.ok) {
+              throw new Error(`Failed to fetch ${url}: ${response.status}`);
+            }
+            return cache.put(url, response);
+          })
+        )
+      )
+    )
   );
   self.skipWaiting();
 });
