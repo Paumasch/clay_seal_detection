@@ -4,6 +4,7 @@
 //   and call the variable wherever you want it (include in html, manipulate via js, etc.)
 
 // maybe rename it to "texts" or "textelements" or something like that, instead of "strings"?
+// might also be more convenient and maintainable to arrange the texts by element, rather than language-first
 
 const STRINGS = {
   en: {
