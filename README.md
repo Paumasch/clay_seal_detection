@@ -41,6 +41,10 @@ I'll have to ponder this, but it might be helpful/necessary to keep them as fall
 
 ## Changelog
 
+### v0.2.4
+- Spending too much time on issues with favicon. Works on localhost, gets 404 via pages.
+- Not worth spending time on, right now.
+
 ### v0.2.1
 - Fixed a stale-cache bug where service-worker installation could pull already-cached (outdated) asset bytes from the browser's ordinary HTTP cache instead of the network; install now forces a network reload for every cached file.
 
