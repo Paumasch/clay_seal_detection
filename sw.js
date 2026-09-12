@@ -12,7 +12,7 @@
 // IMPORTANT: changes in CACHE_NAME trigger local updates (doesn't manually check if file content changed)
 //            -> if changing anything on server, don't forget to update the version to force cache updates
 
-const CACHE_NAME = "seal-counter-v0.2.2";
+const CACHE_NAME = "seal-counter-v0.2.3";
 
 const CACHED_URLS = [
   "./",
@@ -23,7 +23,8 @@ const CACHED_URLS = [
   "./js/strings.js",
   "./js/welcome.js",
   "./js/app.js",
-  "./assets/visual-guide-placeholder.svg"
+  "./assets/visual-guide-placeholder.svg",
+  "./assets/favicon.ico"
 ];
 
 // self.addEventListener("install", (event) => {
