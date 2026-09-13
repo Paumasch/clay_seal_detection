@@ -13,24 +13,34 @@
 //            -> if changing anything on server, don't forget to update the version to force cache updates
 
 
+//MARK: dev_mode toggle
 // force network requests, bypassing the smart caching strategy for faster iteration during development
 // see "fetch" event below
-const DEV_MODE = true; 
+const DEV_MODE = true; // can't be outsourced to config.js, because changes to that file wouldn't be loaded if false
 
-importScripts("./version.js") // retrieve version from central source (needs to use importScripts due to service worker restrictions)
-const CACHE_NAME = `seal-counter-v${APP_VERSION}`; // build name using imported version number. example: 'seal-counter-v0.2.3'
+importScripts("./config.js") // retrieve config (needs to use importScripts due to service worker restrictions)
+const CACHE_NAME = `seal-counter-v${CONFIG.APP_VERSION}`; // build name using imported version number. example: 'seal-counter-v0.2.3'
 
+// keep this up to date
 const CACHED_URLS = [
   "./",
   "./index.html",
   "./app.html",
   "./style.css",
   "./manifest.json",
+  "./config.js",
+
+  "./js/app.js",
+  "./js/register-sw.js",
   "./js/strings.js",
   "./js/welcome.js",
-  "./js/app.js",
-  "./assets/visual-guide-placeholder.svg",
-  "./assets/favicon.ico"
+
+  "./assets/favicon.ico",
+  "./assets/favicon-32x32.png",
+  "./assets/favicon-16x16.png",
+  "./assets/seals_icon_192.png",
+  "./assets/seals_icon_512.png",
+  "./assets/visual-guide-placeholder.svg"
 ];
 
 // self.addEventListener("install", (event) => {
