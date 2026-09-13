@@ -12,7 +12,13 @@
 // IMPORTANT: changes in CACHE_NAME trigger local updates (doesn't manually check if file content changed)
 //            -> if changing anything on server, don't forget to update the version to force cache updates
 
-const CACHE_NAME = "seal-counter-v0.2.4";
+
+// force network requests, bypassing the smart caching strategy for faster iteration during development
+// see "fetch" event below
+const DEV_MODE = true; 
+
+importScripts("./version.js") // retrieve version from central source (needs to use importScripts due to service worker restrictions)
+const CACHE_NAME = `seal-counter-v${APP_VERSION}`; // build name using imported version number. example: 'seal-counter-v0.2.3'
 
 const CACHED_URLS = [
   "./",
@@ -65,6 +71,12 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
+  if (DEV_MODE) {
+    event.respondWith(
+      fetch(event.request).catch(() => caches.match(event.request))
+    );
+    return;
+  }
   event.respondWith(
     caches.match(event.request).then((cached) => cached || fetch(event.request))
   );

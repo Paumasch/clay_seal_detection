@@ -1,8 +1,6 @@
 # seals
 Simple webpage interface for ~~object~~ seal detection
 
-try to roughly follow [semantic versioning guidelines](https://semver.org/) 
-
 
 ## try it live
 
@@ -30,16 +28,31 @@ to test on phone:
 
 ## update checklist
 
-When shipping a new version, remember to bump `CACHE_NAME` in `sw.js` to
-match — otherwise installed/offline copies of the app won't pick up changes.
+When shipping a new version, remember to bump version number in `version.js` to match; otherwise installed/offline copies of the app won't pick up changes.
+Try to roughly follow [semantic versioning guidelines](https://semver.org/).
 
-## one particularity to explain (and potentially deal with later)
+When pushing the finished or a proper test version, make sure to flip `DEV_MODE`false in `sw.js`.
+
+## general notes
+
+### one particularity to explain (and potentially deal with later)
 
 Even though we define a central and authoritative place for our text strings, there's still duplicates in the html files.  
 No one likes that. Introduces potential synchronisation issues.
 I'll have to ponder this, but it might be helpful/necessary to keep them as fallbacks for when js might fail to load, or to not mess with search engines or accessibility tools.
 
+### while working with github pages
+
+all links should be relative:  
+```
+<link rel="icon" href="/assets/favicon-32x32.png">  // wrong (will show 404 in network requests)
+<link rel="icon" href="assets/favicon-32x32.png">   // correct (no leading slash in path)
+```
+
+
 ## Changelog
+
+
 
 ### v0.2.4
 - Spending too much time on issues with favicon. Works on localhost, gets 404 via pages.
