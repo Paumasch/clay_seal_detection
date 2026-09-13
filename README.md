@@ -87,16 +87,21 @@ use screen reader only css for text updates relevant to screen readers only:
 }
 ```
 
-
-
 ### robots.txt / llm.txt  
 
 not really important, but why not include it to cover our bases
 
+### localisation i18n
+
+handy reference here: https://blog.nishikanta.in/data-i18n-for-small-web-projects-a-complete-guide-to-internationalization
 
 
+<!--MARK: changelog-->
 ## Changelog
 
+### v0.3.0 
+- Camera and detection added!
+- lots of minor fixes
 
 ### v0.2.5
 - Created central `config.js` file

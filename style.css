@@ -1,5 +1,10 @@
 /* super basic placeholders */
 
+/* dirty fix to ensure that html 'hidden' attritube always wins */
+[hidden] {
+  display: none !important;
+}
+
 body {
   margin: 1rem;
   font-family: sans-serif;
@@ -48,4 +53,39 @@ button,
 .back-link {
   display: inline-block;
   margin-bottom: 1rem;
+}
+
+#status,
+#detectionPlaceholder {
+  min-height: 1.5em;
+}
+
+/*MARK: camera 
+* - to let css handle the scaling and positioning of the bounding/detection-box, keep:
+*   - position: relative for viewport, and
+*   - position: absolute for .detection-box
+*   - both measured in % 
+* - currently only handles single object
+* - width, margin, etc. just random placeholders for now
+*/
+
+.viewport {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  margin: 1rem 0;
+  background: #000;
+}
+
+.camera-feed {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.detection-box {
+  position: absolute;
+  border: 3px solid limegreen;
+  box-sizing: border-box;
+  pointer-events: none;
 }

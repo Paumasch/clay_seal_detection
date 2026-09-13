@@ -11,7 +11,7 @@ const STRINGS = {
     welcomeTitle: "Seal Counter",
     languageButton: "Language",
     startButton: "Start",
-    appTitle: "Now you seal me",
+    appTitle: "Looking for seals?",
     backButton: "Back",
     cameraHeading: "Camera",
     cameraPlaceholder: "Camera preview will appear here.",

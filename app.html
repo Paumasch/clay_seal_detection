@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="config.js"></script> <!-- this needs to be above any script files that accesses it -->
-  <title data-i18n="appTitle">Seal Counter</title>
+  <title data-i18n="appTitle">Now you seal me</title>
   <link rel="stylesheet" href="style.css">
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
@@ -20,23 +20,29 @@
   <main>
     <a href="index.html" class="back-link" data-i18n="backButton">Back</a>
 
-    <h1 data-i18n="appTitle">Seal Counter</h1>
+    <h1 id="appTitle" data-i18n="appTitle">Seal Counter</h1>
 
+    <!--MARK: camera-->
     <section aria-labelledby="cameraHeading">
       <h2 id="cameraHeading" data-i18n="cameraHeading">Camera</h2>
 
-      <div id="cameraPlaceholder" class="camera-placeholder" aria-live="polite">
-        Camera preview will appear here.
+      <div id="viewport" class="viewport">
+        <video id="cameraVideo" class="camera-feed" playsinline autoplay muted></video>
+        <canvas id="snapshotCanvas" class="camera-feed" hidden></canvas>
+        <div id="detectionBox" class="detection-box" hidden></div>
       </div>
 
       <button id="snapshotButton" type="button" data-i18n="snapshotButton">
         Take snapshot
       </button>
+      <button id="resetButton" type="button" data-i18n="resetButton" hidden>
+        Reset
+      </button>
     </section>
 
     <section aria-labelledby="statusHeading">
       <h2 id="statusHeading" data-i18n="statusHeading">Status</h2>
-      <p id="status" role="status" data-i18n="statusReady">Ready.</p>
+      <p id="statusMsg" role="status" data-i18n="statusReady">Ready.</p>
     </section>
 
     <section aria-labelledby="detectionHeading">
@@ -46,9 +52,6 @@
         Detection result will appear here.
       </div>
 
-      <button id="resetButton" type="button" data-i18n="resetButton">
-        Reset
-      </button>
     </section>
   </main>
 
