@@ -11,10 +11,11 @@ const STRINGS = {
     welcomeTitle: "Seal Counter",
     languageButton: "Language",
     startButton: "Start",
-    appTitle: "Seal Counter",
+    appTitle: "Now you seal me",
     backButton: "Back",
     cameraHeading: "Camera",
     cameraPlaceholder: "Camera preview will appear here.",
+    cameraAccessFailed: "Camera access failed. Check permissions and reload.", // rename to errorCameraAccessFailed?
     snapshotButton: "Take snapshot",
     statusHeading: "Status",
     statusReady: "Ready.",
@@ -33,17 +34,25 @@ const STRINGS = {
   }
 };
 
-const currentLanguage = "en";
+const currentLanguage = "en"; // default
 
+/*
+* - goes over all html elements in 'document' (window.document .. everything currently loaded)
+* - if it encounters anything containing the 'data-i18n' attribute (signifies that this contains
+*   text to be translated) it checks if it's a valid key and translation exists, 
+*   then replaces any text inside the html element with the translated string
+*/
 function translatePage() {
   const strings = STRINGS[currentLanguage];
 
   document.querySelectorAll("[data-i18n]").forEach((element) => {
     const key = element.dataset.i18n;
-    if (strings[key]) {
+    // somewhat clunky fix to deal with potential 'undefined' key (really just to pacify vscode)
+    // checks if key exists and if translation is provided in 'currentLangauge'
+    if (key && (key in strings)) {
       element.textContent = strings[key];
     }
   });
 
-  document.documentElement.lang = currentLanguage;
+  document.documentElement.lang = currentLanguage; // sets <html lang="da"> or en, kl, etc.
 }
