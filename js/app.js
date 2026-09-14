@@ -8,9 +8,11 @@
 translatePage(); // from strings.js, applies localisation
 
 const appTitle = document.getElementById("appTitle");
-
 const statusElement = document.getElementById("statusMsg");
 const snapshotButton = document.getElementById("snapshotButton");
+const liveDetectionButton = document.getElementById("liveDetectionButton");
+let liveDetection = false; // toggle/flag
+const liveDet_interval = CONFIG.LIVEDETECTION_INTERVAL_MS;
 const resetButton = document.getElementById("resetButton");
 const detectionPlaceholder = document.getElementById("detectionPlaceholder");
 const video = document.getElementById("cameraVideo");
@@ -69,6 +71,33 @@ function drawDetection(detections) {
   detectionPlaceholder.textContent = `${det.class} (${Math.round(det.confidence * 100)}%)`;
 }
 
+/*MARK: singleFrame
+* for liveDetection
+*/
+async function detectCurrentFrame() {
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+
+  canvas.getContext("2d").drawImage(video, 0, 0, canvas.width, canvas.height);
+
+  const result = await detector.detect(canvas);
+
+  drawDetection(result.detections);
+
+  return result;
+}
+
+/*MARK: loop
+*/
+async function runLiveDetection() {
+  while (liveDetection) {
+    await detectCurrentFrame();
+
+    // Wait one second before analysing the next frame.
+    await new Promise((resolve) => setTimeout(resolve, liveDet_interval));
+  }
+}
+
 //MARK: assignments/calls
 
 /*
@@ -92,6 +121,21 @@ snapshotButton.addEventListener("click", async () => {
 
   statusElement.textContent = STRINGS[currentLanguage].statusReady;
   drawDetection(result.detections);
+});
+
+/*
+* toggle live detection
+*/
+liveDetectionButton.addEventListener("click", () => {
+  liveDetection = !liveDetection;
+
+  if (liveDetection) {
+    liveDetectionButton.textContent = "Stop live detection";
+    runLiveDetection();
+  } else {
+    liveDetectionButton.textContent = "Start live detection";
+    detectionBox.hidden = true;
+  }
 });
 
 /*

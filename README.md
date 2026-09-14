@@ -130,8 +130,6 @@ handy reference here: https://blog.nishikanta.in/data-i18n-for-small-web-project
 
 Minimal two-page prototype.
 
-#### current scope
-
 Placeholders! Placeholders, everywhere!
 
 - separate welcome and application pages
@@ -143,7 +141,3 @@ Placeholders! Placeholders, everywhere!
 - no camera access yet
 - no real detection yet
 - minimal CSS
-
-# Version
-
-v0.3.0
