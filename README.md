@@ -99,6 +99,9 @@ handy reference here: https://blog.nishikanta.in/data-i18n-for-small-web-project
 <!--MARK: changelog-->
 ## Changelog
 
+### v0.5.0
+- Got lazy and asked ai to write a loop real quick. It refactored app.js and it works, but ... urgh
+
 ### v0.4.0
 - Add pluggable detector routing and multiple options: reindeer detector!
 - temporarily hide headings
