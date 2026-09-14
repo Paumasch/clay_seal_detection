@@ -5,7 +5,7 @@
 
 const CONFIG = {
 
-  APP_VERSION: "0.5.0",   // if `DEV_MODE: true` acts as toggle to update     
+  APP_VERSION: "0.5.1",   // if `DEV_MODE: true` acts as toggle to update     
 
   ACTIVE_DETECTOR: "bright",  // selects which detector to use from detectors.js (options at the very bottom)
 

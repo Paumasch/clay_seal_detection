@@ -127,6 +127,11 @@ async function detectCurrentFrame() {
 
   const result = await detector.detect(canvas);
 
+  //MARK: temporary fix
+  // there's currently no hard cancellation, so the last one can get drawn after supposedly stopped
+  if (!liveDetection){
+    return result;
+  }
   drawDetection(result.detections);
 
   return result;
