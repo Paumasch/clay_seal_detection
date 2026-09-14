@@ -5,8 +5,8 @@
 
 const CONFIG = {
 
-  APP_VERSION: "0.3.0",   // if `DEV_MODE: true` acts as toggle to update     
+  APP_VERSION: "0.4.0",   // if `DEV_MODE: true` acts as toggle to update     
 
-  ACTIVE_DETECTOR: "toy"  // "toy" | "remote" | "onnx" — selects which detector implementation app.js wires up
+  ACTIVE_DETECTOR: "reindeer"  // selects which detector to use from detectors.js
 
 };

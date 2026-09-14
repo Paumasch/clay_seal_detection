@@ -31,6 +31,7 @@ const CACHED_URLS = [
   "./config.js",
 
   "./js/app.js",
+  "./js/detectors.js",
   "./js/register-sw.js",
   "./js/strings.js",
   "./js/welcome.js",

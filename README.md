@@ -99,6 +99,10 @@ handy reference here: https://blog.nishikanta.in/data-i18n-for-small-web-project
 <!--MARK: changelog-->
 ## Changelog
 
+### v0.4.0
+- Add pluggable detector routing and multiple options: reindeer detector!
+- temporarily hide headings
+
 ### v0.3.0 
 - Camera and detection added!
 - lots of minor fixes
@@ -142,4 +146,4 @@ Placeholders! Placeholders, everywhere!
 
 # Version
 
-v0.2.5
+v0.3.0

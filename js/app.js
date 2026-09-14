@@ -17,40 +17,7 @@ const video = document.getElementById("cameraVideo");
 const canvas = document.getElementById("snapshotCanvas");
 const detectionBox = document.getElementById("detectionBox");
 
-//MARK: toy detector
-/* 
-* fake/example/placeholder for verification 
-* fixed box position/size, to test if the coordinate math is correct before adding the model
-* only the found/not-found outcome varies
-* to be replaced with real detection function
-* (rename this? or do it elsewhere?)
-* */
-const detector = {
-  async detect(capturedCanvas) {
-
-    // simulate some inference delay (when actual model gets involved)
-    await new Promise((resolve) => setTimeout(resolve, 500)); 
-
-    // randomly find or not find a thing
-    const found = Math.random() > 0.3;
-    if (!found) {
-      return { detections: [] };
-    }
-
-    return {
-      detections: [ // fake data
-        {
-          class: "seal",
-          confidence: 0.87,
-          x: 0.30,      // normalized (0–1) top-left, relative to image width
-          y: 0.35,
-          width: 0.25,
-          height: 0.20
-        }
-      ]
-    };
-  }
-};
+// detector moved to its own file detectors.js
 
 async function startCamera() {
   try {
@@ -82,7 +49,7 @@ function showSnapshotView() {
 function drawDetection(detections) {
   if (detections.length === 0) { // if no detection
     detectionBox.hidden = true;
-    detectionPlaceholder.textContent = "No seal detected.";
+    detectionPlaceholder.textContent = "Nothing detected."; //"No seal detected.";
     //MARK: joke
     appTitle.textContent = "Now you don't"; 
     return;
