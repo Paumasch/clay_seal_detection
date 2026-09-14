@@ -9,6 +9,6 @@ const CONFIG = {
 
   ACTIVE_DETECTOR: "reindeer",  // selects which detector to use from detectors.js (options at the very bottom)
 
-  LIVEDETECTION_INTERVAL_MS: 1000  // time between detections in live/continuous mode (in miliseconds)
+  LIVEDETECTION_INTERVAL_MS: 100  // time between detections in live/continuous mode (in miliseconds)
 
 };
