@@ -164,7 +164,9 @@ function startLiveDetection() {
 function stopLiveDetection() {
   liveDetection = false;
 
+  // cleanup
   detectionPlaceholder.textContent = "";
+  detectionBox.hidden = true; // already handled by showLiveView
 
   showLiveView();
   statusElement.textContent = STRINGS[currentLanguage].statusReady;
