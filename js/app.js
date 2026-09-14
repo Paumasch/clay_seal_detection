@@ -164,6 +164,8 @@ function startLiveDetection() {
 function stopLiveDetection() {
   liveDetection = false;
 
+  detectionPlaceholder.textContent = "";
+
   showLiveView();
   statusElement.textContent = STRINGS[currentLanguage].statusReady;
 }
