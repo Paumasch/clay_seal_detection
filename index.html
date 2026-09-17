@@ -17,18 +17,22 @@
 
 <body>
   <main>
+    <nav class="top-nav" aria-label="Primary navigation">
+      <span aria-hidden="true"></span>
+
+      <div class="language-area">
+        <button id="languageButton" type="button" aria-expanded="false" aria-controls="languageMessage" data-i18n="languageButton">
+          Language
+        </button>
+        <div id="languageMessage" role="status" hidden>
+          The translators don't like being rushed.
+        </div>
+      </div>
+    </nav>
+
     <h1 data-i18n="welcomeTitle">Seal Sleuth</h1>
 
     <img src="assets/visual-guide-placeholder.svg" alt="Placeholder for the visual guide" class="guide-image">
-
-    <div class="language-area">
-      <button id="languageButton" type="button" aria-expanded="false" aria-controls="languageMessage" data-i18n="languageButton">
-        Language
-      </button>
-      <div id="languageMessage" role="status" hidden>
-        The translators don't like being rushed.
-      </div>
-    </div>
 
     <a class="button" href="app.html" data-i18n="startButton">
       Start

@@ -1,5 +1,16 @@
 /* super basic placeholders */
 
+/* 
+https://www.w3schools.com/css/css_selectors.asp  
+#something .. id
+.something .. class
+
+https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics/Values_and_units
+rem .. relative to font size of root element
+vh, vw .. relative to viewport's height/width ("viewport" = window in browser, not our little camera thing)
+
+*/
+
 /* dirty fix to ensure that html 'hidden' attritube always wins */
 [hidden] {
   display: none !important;
@@ -63,9 +74,23 @@ button,
   margin: 1rem 0;
 }
 
+.top-nav {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  min-height: 2rem;
+  margin-bottom: 1rem;
+}
+
 .language-area {
   position: relative;
-  margin-bottom: 1rem;
+  text-align: right;
+}
+
+#languageButton {
+  font-size: small;
+  margin: 0.1rem 0;
+  padding: 0.1rem 0.5rem;
 }
 
 #languageMessage {
@@ -76,7 +101,6 @@ button,
 
 .back-link {
   display: inline-block;
-  margin-bottom: 1rem;
 }
 
 #status,

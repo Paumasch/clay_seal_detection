@@ -18,7 +18,18 @@
 
 <body>
   <main>
-    <a href="index.html" class="back-link" data-i18n="backButton">Back</a>
+    <nav class="top-nav" aria-label="Primary navigation">
+      <a href="index.html" class="back-link" data-i18n="backButton">Back</a>
+
+      <div class="language-area">
+        <button id="languageButton" type="button" aria-expanded="false" aria-controls="languageMessage" data-i18n="languageButton">
+          Language
+        </button>
+        <div id="languageMessage" role="status" hidden>
+          The translators don't like being rushed.
+        </div>
+      </div>
+    </nav>
 
     <h1 id="appTitle" data-i18n="appTitle">Seal Sleuth</h1>
 
@@ -60,15 +71,6 @@
       </div>
 
     </section>
-
-    <div class="language-area">
-      <button id="languageButton" type="button" aria-expanded="false" aria-controls="languageMessage" data-i18n="languageButton">
-        Language
-      </button>
-      <div id="languageMessage" role="status" hidden>
-        The translators don't like being rushed.
-      </div>
-    </div>
 
   </main>
 
