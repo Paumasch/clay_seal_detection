@@ -17,6 +17,7 @@ const STRINGS = {
     cameraPlaceholder: "Camera preview will appear here.",
     cameraAccessFailed: "Camera access failed. Check permissions and reload.", // rename to errorCameraAccessFailed?
     snapshotButton: "Take snapshot",
+    liveDetectionRunning: "Live detection running",
     statusHeading: "Status",
     statusReady: "Ready.",
     detectionHeading: "Detection",

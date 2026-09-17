@@ -5,12 +5,32 @@
 // -> that everything is covered by localisation
 
 
+/* the basic liveDetection loop (async, self-scheduling, equivalent to synchronous while(loop)) 
+
+  loop = false
+
+  button pressed:
+      loop = !loop
+      if loop:
+          runDetectionLoop()
+
+  runDetectionLoop: 
+      if loop:
+          take snapshot
+          detect
+          draw
+          wait a bit
+          runDetectionLoop again
+          
+*/
+
 translatePage(); // from strings.js, applies localisation
 
 const appTitle = document.getElementById("appTitle");
 const statusElement = document.getElementById("statusMsg");
 const snapshotButton = document.getElementById("snapshotButton");
 const liveDetectionButton = document.getElementById("liveDetectionButton");
+const liveDetectionIndicator = document.getElementById("liveDetectionIndicator");
 const resetButton = document.getElementById("resetButton");
 const detectionPlaceholder = document.getElementById("detectionPlaceholder");
 const video = document.getElementById("cameraVideo");
@@ -21,6 +41,7 @@ const detectionBox = document.getElementById("detectionBox");
 
 let liveDetection = false;
 const liveDetectionInterval = CONFIG.LIVEDETECTION_INTERVAL_MS;
+liveDetectionIndicator.setAttribute("aria-label", STRINGS[currentLanguage].liveDetectionRunning);
 
 
 //MARK: camera
@@ -44,6 +65,7 @@ function showLiveView() {
   video.hidden = false;
   canvas.hidden = true;
   detectionBox.hidden = true;
+  liveDetectionIndicator.hidden = true;
 
   snapshotButton.hidden = false;
   resetButton.hidden = true;
@@ -55,6 +77,7 @@ function showLiveView() {
 function showSnapshotView() {
   video.hidden = true;
   canvas.hidden = false;
+  liveDetectionIndicator.hidden = true;
 
   snapshotButton.hidden = true;
   resetButton.hidden = false;
@@ -66,6 +89,7 @@ function showSnapshotView() {
 function showLiveDetectionView() {
   video.hidden = false;
   canvas.hidden = true;
+  liveDetectionIndicator.hidden = false;
 
   snapshotButton.hidden = false;
   resetButton.hidden = true;

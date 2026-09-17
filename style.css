@@ -84,7 +84,7 @@ button,
   min-height: 1.5em;
 }
 
-/*MARK: camera 
+/*MARK: viewport 
 * - to let css handle the scaling and positioning of the bounding/detection-box, keep:
 *   - position: relative for viewport, and
 *   - position: absolute for .detection-box
@@ -112,4 +112,21 @@ button,
   border: 3px solid limegreen;
   box-sizing: border-box;
   pointer-events: none;
+}
+
+.live-detection-indicator {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background: #e00000;
+  box-shadow: 0 0 0.35rem #e00000;
+  animation: live-detection-pulse 1.5s ease-in-out infinite;
+}
+@keyframes live-detection-pulse {
+  0%,
+  100% { opacity: 1; }
+  50% { opacity: 0.25; }
 }
