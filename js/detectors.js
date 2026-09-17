@@ -203,9 +203,14 @@ const brightDetector = {
 * value, rather than leaving `detector` undefined and crashing on first use
 * */
 const detectors = {
+  //toy examples
   fake: fakeDetector,
-  reindeer: reindeerDetector, // inside joke: looks for blue blobs
-  bright: brightDetector
+  reindeer: reindeerDetector, // inside joke: looks for blueish blobs
+  bright: brightDetector,
+  // the real deal
+  yololocal: toBeAdded,   
+  yoloort: toBeAddded,    // optimised https://onnxruntime.ai/docs/performance/model-optimizations/ort-format-models.html
+  yolohosted: toBeAdddded // maybe
 };
 
 const detector = detectors[CONFIG.ACTIVE_DETECTOR] || (() => {

@@ -37,6 +37,32 @@ When adding or removing files, remember to add/remove them in `sw.js`. No wildca
 
 ## general notes 
 
+### SO MANY FILES!!  
+
+bold stuff is probably the stuff you care about
+
+suuuper simplified web stuff:  
+html tells the browser what's there (like headers, paragraphs, buttons, etc.) to give info to the browser, what be displayed, things to manipulate via javascript (tells the browser what to do / how to react to events (for example "a user clicks some button")) and css (tells browser how things should look)  
+
+- README.md .. a good place to start!  
+
+- index.html .. the first page one lands on when visiting the site  
+- **app.html** ..  page where the magic happens
+- style.css .. catch-all, makes things pretty
+
+- **config.js** .. one place to adjust settings (referenced in other places)
+- js/welcome.js .. to be removed, just a placeholder for what to do when page first opened  
+- js/**app.js** .. the main place for all functional things
+- js/**detectors.js** .. everything related to the actual object detection
+- js/strings.js .. one place to hold the translations for all text elements
+
+housekeeping   
+- manifest.json .. tells the browser how to handle this mess
+- sw.js .. "service-worker" .. self-contained little script dealing with local storage/cache, etc. 
+- js/register-sw.js .. tells the browser to use the service-worker
+- favicon.ico .. little logo 
+- assets/ .. logos of various sizes, visual elements, etc.
+
 ### todo: add cache cleanup
 
 Browsers already handle this on their own, but it's good etiquette to clean up after ourselves, when messing with cache/persistent storage.

@@ -23,9 +23,7 @@ let liveDetection = false;
 const liveDetectionInterval = CONFIG.LIVEDETECTION_INTERVAL_MS;
 
 
-/*
-* camera
-*/
+//MARK: camera
 
 async function startCamera() {
   try {
@@ -40,9 +38,7 @@ async function startCamera() {
 }
 
 
-/*
-* views / states
-*/
+//MARK: viewport states
 
 function showLiveView() {
   video.hidden = false;
@@ -79,21 +75,22 @@ function showLiveDetectionView() {
 }
 
 
-/*
-* detection
-*/
+//MARK: detection
 
+/*
+* draws output
+*/
 function drawDetection(detections) {
   if (detections.length === 0) {
     detectionBox.hidden = true;
     detectionPlaceholder.textContent = "Nothing detected.";
 
-    //MARK: joke
+    // joke (to be removed)
     appTitle.textContent = "Now you don't"; 
     return;
   }
 
-  //MARK: joke continues
+  // joke continues (to be removed)
   appTitle.textContent = "Now you seal me";
 
   const det = detections[0]; // for now only display the first detection
@@ -112,11 +109,11 @@ function drawDetection(detections) {
 /*
 * capture and analyse one frame
 */
-
 async function detectCurrentFrame() {
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
 
+  // creates snapshot
   canvas.getContext("2d").drawImage(
     video,
     0,
@@ -125,13 +122,16 @@ async function detectCurrentFrame() {
     canvas.height
   );
 
+  // runs snapshot through detector
   const result = await detector.detect(canvas);
 
-  //MARK: temporary fix
+  // temporary fix
   // there's currently no hard cancellation, so the last one can get drawn after supposedly stopped
   if (!liveDetection){
     return result;
   }
+
+  // draws bounding box(es) / updates overlay
   drawDetection(result.detections);
 
   return result;
@@ -139,9 +139,8 @@ async function detectCurrentFrame() {
 
 
 /*
-* continuous detection loop
+* continuous detection loop - just keeps taking, analysing, displaying snapshots on timer
 */
-
 async function runLiveDetection() {
   while (liveDetection) {
     await detectCurrentFrame();
@@ -153,9 +152,7 @@ async function runLiveDetection() {
 }
 
 
-/*
-* mode changes
-*/
+//MARK: modes
 
 function startLiveDetection() {
   liveDetection = true;
@@ -178,10 +175,7 @@ function stopLiveDetection() {
 }
 
 
-/*
-* button actions
-*/
-
+//MARK: buttons
 
 /*
 * snapshotButton:
@@ -252,9 +246,7 @@ resetButton.addEventListener("click", () => {
 });
 
 
-/*
-* startup
-*/
+//MARK: execute functions
 
 showLiveView();
 startCamera();
