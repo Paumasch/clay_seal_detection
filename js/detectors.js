@@ -208,9 +208,9 @@ const detectors = {
   reindeer: reindeerDetector, // inside joke: looks for blueish blobs
   bright: brightDetector,
   // the real deal
-  yololocal: toBeAdded,   
-  yoloort: toBeAddded,    // optimised https://onnxruntime.ai/docs/performance/model-optimizations/ort-format-models.html
-  yolohosted: toBeAdddded // maybe
+  //yololocal: toBeAdded,   
+  //yoloort: toBeAddded,    // optimised https://onnxruntime.ai/docs/performance/model-optimizations/ort-format-models.html
+  //yolohosted: toBeAdddded // maybe
 };
 
 const detector = detectors[CONFIG.ACTIVE_DETECTOR] || (() => {
