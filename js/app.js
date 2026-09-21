@@ -101,7 +101,7 @@ function showLiveDetectionView() {
 
 //MARK: detection
 
-/*
+/**
 * draws output
 */
 function drawDetection(detections) {
@@ -130,7 +130,7 @@ function drawDetection(detections) {
 }
 
 
-/*
+/**
 * capture and analyse one frame
 */
 async function detectCurrentFrame() {
@@ -162,17 +162,36 @@ async function detectCurrentFrame() {
 }
 
 
-/*
+/**
 * continuous detection loop - just keeps taking, analysing, displaying snapshots on timer
 */
-async function runLiveDetection() {
-  while (liveDetection) {
-    await detectCurrentFrame();
+// async function runLiveDetection() {
+//   while (liveDetection) {
+//     await detectCurrentFrame();
 
-    await new Promise((resolve) =>
-      setTimeout(resolve, liveDetectionInterval)
-    );
+//     await new Promise((resolve) =>
+//       setTimeout(resolve, liveDetectionInterval)
+//     );
+//   }
+// }
+async function runLiveDetection() {
+  console.log("[live] Detection loop started.");
+
+  while (liveDetection) {
+    try {
+      const result = await detectCurrentFrame();
+      console.log("[live] Frame processed:", {detections: result.detections.length});
+    } catch (error) {
+      console.error("[live] Detection failed:", error);
+      statusElement.textContent = "Detection failed. Check the console.";
+      liveDetection = false;
+      showLiveView();
+      break;
+    }
+    await new Promise((resolve) => setTimeout(resolve, liveDetectionInterval));
   }
+
+  console.log("[live] Detection loop stopped.");
 }
 
 
@@ -184,7 +203,9 @@ function startLiveDetection() {
   showLiveDetectionView();
   statusElement.textContent = STRINGS[currentLanguage].statusReady;
 
-  runLiveDetection();
+  // why prefix with 'void'? 
+  // it discards runLiveDetection's first promise -> activates the async loop, without actually executing the first run
+  void runLiveDetection(); 
 }
 
 function stopLiveDetection() {
@@ -201,7 +222,7 @@ function stopLiveDetection() {
 
 //MARK: buttons
 
-/*
+/**
 * snapshotButton:
 * - stop live detection if necessary
 * - take snapshot

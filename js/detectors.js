@@ -15,6 +15,17 @@
 
 const STEP = 2; // only every n-th pixel checked
 
+
+//MARK: convert
+/*
+* convert capturedCanvas into format compatible with detection
+* potentially perform some pre-processing
+*/
+function convertCanvas() { 
+  return console.log("heyo");
+}
+
+
 //MARK: fakeDetector
 /*
 * randomly "finds" a seal at a fixed position/size
@@ -189,10 +200,178 @@ const brightDetector = {
 };
 
 
-//MARK: to add later
-// yoloDetector  — local inference via onnx runtime, once model details are shared
-// remoteDetector — sends the snapshot to an external api and awaits a result
+//MARK: ai-slop
+/*
+* quick YOLOv8 ONNX experiment (ai-slop)
+* 
+* yeah... no
+* 
+* doesn't include NMS
+*
+* NOT production code yet.
+* Assumes:
+* - model input: [1, 3, 640, 640]
+* - model output: [1, 6, 8400]
+* - output format: [x, y, width, height, class0, class1]
+*/
 
+const yoloDetector = {
+
+  session: null,
+  initPromise: null,
+
+  async init() {
+    if (this.initPromise) {
+      return this.initPromise;
+    }
+
+    if (typeof ort === "undefined") {
+      throw new Error("ONNX Runtime Web is not loaded.");
+    }
+
+    console.log("[yolo] Loading models/best.onnx...");
+
+    this.initPromise = ort.InferenceSession.create("models/best.onnx")
+      .then((session) => {
+        this.session = session;
+        console.log("[yolo] Model loaded.", {
+          inputNames: session.inputNames,
+          outputNames: session.outputNames
+        });
+        return session;
+      })
+      .catch((error) => {
+        this.initPromise = null;
+        console.error("[yolo] Model loading failed:", error);
+        throw error;
+      });
+
+    return this.initPromise;
+  },
+
+
+  async detect(capturedCanvas) {
+
+    if (!this.session) {
+      await this.init();
+    }
+
+    console.log("[yolo] Running detection.", {
+      width: capturedCanvas.width,
+      height: capturedCanvas.height
+    });
+
+    const input = new Float32Array(1 * 3 * 640 * 640);
+
+    const tempCanvas = document.createElement("canvas");
+    tempCanvas.width = 640;
+    tempCanvas.height = 640;
+
+    const ctx = tempCanvas.getContext("2d");
+    ctx.drawImage(capturedCanvas, 0, 0, 640, 640);
+
+    const imageData = ctx.getImageData(0, 0, 640, 640);
+
+    /*
+    * Convert browser RGBA pixels into YOLO's
+    * RGB / CHW / float32 format.
+    */
+
+    for (let y = 0; y < 640; y++) {
+      for (let x = 0; x < 640; x++) {
+
+        const pixel = (y * 640 + x) * 4;
+        const index = y * 640 + x;
+
+        input[index] =
+          imageData.data[pixel] / 255;
+
+        input[640 * 640 + index] =
+          imageData.data[pixel + 1] / 255;
+
+        input[2 * 640 * 640 + index] =
+          imageData.data[pixel + 2] / 255;
+      }
+    }
+
+    const tensor = new ort.Tensor(
+      "float32",
+      input,
+      [1, 3, 640, 640]
+    );
+
+    const results = await this.session.run({
+      images: tensor
+    });
+
+    const outputTensor = results.output0;
+
+    console.log("[yolo] Inference complete.", {
+      outputNames: Object.keys(results),
+      outputDimensions: outputTensor.dims,
+      outputLength: outputTensor.data.length
+    });
+
+    const output = outputTensor.data;
+
+    const detections = [];
+
+    const numCandidates = 8400;
+    const numClasses = 2;
+
+    const confidenceThreshold = 0.4;
+
+    for (let i = 0; i < numCandidates; i++) {
+
+      const x = output[i];
+      const y = output[numCandidates + i];
+      const width = output[2 * numCandidates + i];
+      const height = output[3 * numCandidates + i];
+
+      const class0 = output[4 * numCandidates + i];
+      const class1 = output[5 * numCandidates + i];
+
+      let classId;
+      let confidence;
+
+      if (class0 > class1) {
+        classId = 0;
+        confidence = class0;
+      } else {
+        classId = 1;
+        confidence = class1;
+      }
+
+      if (confidence < confidenceThreshold) {
+        continue;
+      }
+
+      /*
+      * YOLO gives centre coordinates.
+      * Convert to top-left coordinates.
+      */
+
+      const boxX = x - width / 2;
+      const boxY = y - height / 2;
+
+      detections.push({
+        class: classId === 0 ? "class0" : "class1",
+        confidence: confidence,
+
+        // Convert 640px coordinates to normalized 0–1.
+        x: boxX / 640,
+        y: boxY / 640,
+        width: width / 640,
+        height: height / 640
+      });
+    }
+
+    console.log("[yolo] Detections:", detections.length);
+    if (detections.length > 0) console.log(detections); // just dump it all
+
+    return { detections };
+  }
+};
 
 
 //MARK: detector routing
@@ -208,6 +387,7 @@ const detectors = {
   reindeer: reindeerDetector, // inside joke: looks for blueish blobs
   bright: brightDetector,
   // the real deal
+  yolo: yoloDetector
   //yololocal: toBeAdded,   
   //yoloort: toBeAddded,    // optimised https://onnxruntime.ai/docs/performance/model-optimizations/ort-format-models.html
   //yolohosted: toBeAdddded // maybe
@@ -217,5 +397,5 @@ const detector = detectors[CONFIG.ACTIVE_DETECTOR] || (() => {
   console.error(
     `Unknown CONFIG.ACTIVE_DETECTOR "${CONFIG.ACTIVE_DETECTOR}" in config.js — falling back to fakeDetector.`
   );
-  return fakeDetector;
+  return fakeDetector; // fallback
 })();

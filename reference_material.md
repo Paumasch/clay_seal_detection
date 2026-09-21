@@ -8,6 +8,10 @@ https://onnxruntime.ai/docs/tutorials/mobile/
 
 https://onnxruntime.ai/docs/tutorials/web/
 
+### visualise it: 
+
+https://netron.app/
+
 
 ## basic web stuff
 
