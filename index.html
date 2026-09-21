@@ -15,25 +15,32 @@
   <script src="js/register-sw.js"></script>
 </head>
 
-<body>
+<body style="background-color:rgb(175, 172, 188);">
   <main>
     <nav class="top-nav" aria-label="Primary navigation">
       <span aria-hidden="true"></span>
 
-      <div class="language-area">
-        <button id="languageButton" type="button" aria-expanded="false" aria-controls="languageMessage" data-i18n="languageButton">
-          Language
-        </button>
-        <div id="languageMessage" role="status" hidden>
-          The translators don't like being rushed.
-        </div>
-      </div>
+      <div class="language_selection_dropdown">
+          <button id ="englishButton">English</button>
+          <button id="danishButton">Danish</button>
+          <button id="Kalaallisut">Kalaallisut</button>
+      </div id= "languageMessage" role="status" hidden>
     </nav>
 
-    <h1 data-i18n="welcomeTitle">Seal Sleuth</h1>
+    <h1 id="Header">
+        <a class="pageTitlelogo" href="/">
+            <img src="images/SealDetectionLogo.png"  width="300" height="150">
+        </a>
+    </h1>   
 
-    <img src="assets/visual-guide-placeholder.svg" alt="Placeholder for the visual guide" class="guide-image">
-
+    <h3> 
+        <p>
+            This webpage was developed as a simple demonstration of an object detection model.
+            The model type is called YOLOv8n. The Aria-funded DronePort Project is using a similar model to
+            detect and count the Kangia Ringed Seal Population in the Ilulissat Icefjord.            
+        </p>
+      </h3>
+    
     <a class="button" href="app.html" data-i18n="startButton">
       Start
     </a>
