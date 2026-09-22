@@ -19,11 +19,23 @@
   <main>
     <nav class="top-nav" aria-label="Primary navigation">
       <span aria-hidden="true"></span>
-
+      <!--Language Selection Dropdown-->
       <div class="language_selection_dropdown">
-          <button id ="englishButton">English</button>
-          <button id="danishButton">Danish</button>
-          <button id="Kalaallisut">Kalaallisut</button>
+        <label for="languageSelection" data-i18n="languageSelection">Choose a language:</label>
+        <select name="languageSelection" id="languageSelection" aria-label="Language selection">
+          <option value="Kalaallisut"><a class="flag-icon" href="/">
+            <img src="images/GreenlandFlag.png" alt="Greenland Flag" width="20" height="15">
+            </a>
+          </option>
+          <option value="Danish"><a class="flag-icon" href="/">
+            <img src="images/DenmarkFlag.png" alt="Denmark Flag" width="20" height="15">
+            </a>
+          </option>
+          <option value="English"><a class="flag-icon" href="/">
+            <img src="images/UKFlag.png" alt="UK Flag" width="20" height="15">
+            </a>
+          </option>
+        </select>
       </div id= "languageMessage" role="status" hidden>
     </nav>
 
@@ -49,9 +61,9 @@
   <!--MARK: scripts
   notes:  - config.js and register-sw.js need to be loaded early (therefore sitting in head)
           - the remaining scripts need to be ordered by dependence 
-            (welcome loads strings, therefore loaded last)
+            (welcome loads textelements, therefore loaded last)
   -->
-  <script src="js/strings.js"></script>
+  <script src="js/textelements.js"></script>
   <script src="js/welcome.js"></script>
 </body>
 
