@@ -15,9 +15,8 @@
 
 const STEP = 2; // only every n-th pixel checked
 
-//MARK: temporary! 
-// this really should be retrieved from config, model, some other spec 
-const classNames = ["seal", "pup"]; 
+// grab from config (best to move this as part of model metadata, later. works for now)
+const classNames = CONFIG.MODEL_CLASSES;
 
 
 //MARK: convert

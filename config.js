@@ -9,6 +9,8 @@ const CONFIG = {
 
   ACTIVE_DETECTOR: "yolo",  // selects which detector to use from detectors.js (options at the very bottom)
 
+  MODEL_CLASSES: ["seal", "pup"], // might as well put them here
+
   LIVEDETECTION_INTERVAL_MS: 100  // time between detections in live/continuous mode (in miliseconds)
 
 };
