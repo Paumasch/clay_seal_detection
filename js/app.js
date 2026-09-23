@@ -109,13 +109,8 @@ function drawDetection(detections) {
     detectionBox.hidden = true;
     detectionPlaceholder.textContent = "Nothing detected.";
 
-    // joke (to be removed)
-    appTitle.textContent = "Now you don't"; 
     return;
   }
-
-  // joke continues (to be removed)
-  appTitle.textContent = "Now you seal me";
 
   const det = detections[0]; // for now only display the first detection
 
