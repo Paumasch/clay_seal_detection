@@ -262,10 +262,15 @@ const yoloDetector = {
     });
 
     const input = new Float32Array(1 * 3 * 640 * 640);
+  
+    /*changed with help of mistral */
+    if(!this.tempCanvas) {
+      this.tempCanvas = document.createElement("canvas");
+      this.tempCanvas.width = 640;
+      this.tempCanvas.height = 640;
+    }
 
-    const tempCanvas = document.createElement("canvas");
-    tempCanvas.width = 640;
-    tempCanvas.height = 640;
+    const tempCanvas = this.tempCanvas;
 
     const ctx = tempCanvas.getContext("2d");
     ctx.drawImage(capturedCanvas, 0, 0, 640, 640);
@@ -276,23 +281,15 @@ const yoloDetector = {
     * Convert browser RGBA pixels into YOLO's
     * RGB / CHW / float32 format.
     */
+    /* changed with help of mistral */
+    for (let index = 0; index < 640 * 640; index++) {
 
-    for (let y = 0; y < 640; y++) {
-      for (let x = 0; x < 640; x++) {
+        const pixel = index * 4;
 
-        const pixel = (y * 640 + x) * 4;
-        const index = y * 640 + x;
-
-        input[index] =
-          imageData.data[pixel] / 255;
-
-        input[640 * 640 + index] =
-          imageData.data[pixel + 1] / 255;
-
-        input[2 * 640 * 640 + index] =
-          imageData.data[pixel + 2] / 255;
+        input[index] = imageData.data[pixel] / 255;
+        input[640 * 640 + index] = imageData.data[pixel + 1] / 255;
+        input[2 * 640 * 640 + index] = imageData.data[pixel + 2] / 255;
       }
-    }
 
     const tensor = new ort.Tensor(
       "float32",
@@ -301,10 +298,10 @@ const yoloDetector = {
     );
 
     const results = await this.session.run({
-      images: tensor
+      [this.session.inputName[0]]: tensor
     });
 
-    const outputTensor = results.output0;
+    const outputTensor = results[this.session.outputNames[0]];
 
     console.log("[yolo] Inference complete.", {
       outputNames: Object.keys(results),
@@ -316,20 +313,35 @@ const yoloDetector = {
 
     const detections = [];
 
-    const numCandidates = 8400;
+    /*changed with help of mistral */
     const numClasses = 2;
+    const dims = outputTensor.dims;
+    const channelsMajor =dims[1] === 4 + numClasses; //[1, 6, 8400]
+    if (!channelsMajor && dims[dims.length - 1] !== 4 + numClasses) {
+      throw new Error(
+        "Unexpected output layout: " + JSON.stringify(dims) +
+        " - expected [1, " + (4 + numClasses) + ", N] or [1, N, " + (4 + numClasses) + "]"
+      );
+    }
+
+    const numCandidates = channelsMajor ? dims[2] : dims[1]; // derive, dont hardcode 8400
+
+    // -- Helper that reads output correctly for either layout
+    const readCell = (row, i) => 
+      channelsMajor ? output[row * numCandidates + i]
+      : output[i * (4 + numClasses) + row];
 
     const confidenceThreshold = 0.4;
 
     for (let i = 0; i < numCandidates; i++) {
 
-      const x = output[i];
-      const y = output[numCandidates + i];
-      const width = output[2 * numCandidates + i];
-      const height = output[3 * numCandidates + i];
+      const x = readCell(0, i);
+      const y = readCell(1, i);
+      const width = readCell(2, i);
+      const height = readCell(3, i);
 
-      const class0 = output[4 * numCandidates + i];
-      const class1 = output[5 * numCandidates + i];
+      const class0 = readCell(4, i);
+      const class1 = readCell(5, i);
 
       let classId;
       let confidence;
@@ -351,28 +363,45 @@ const yoloDetector = {
       * Convert to top-left coordinates.
       */
 
-      const boxX = x - width / 2;
-      const boxY = y - height / 2;
+      // ── CHANGE #8: scale coordinates back to the ORIGINAL canvas.
 
-      detections.push({
-        class: classId === 0 ? "class0" : "class1",
-        confidence: confidence,
+      const x1 = (x -wifth / 2) / 640 * capturedCanvas.width;
+      const y1 = (y - height / 2) / 640 * capturedCanvas.height;
+      const x2 = (x + width / 2) / 640 * capturedCanvas.width;
+      const y2 = (y + height / 2) / 640 * capturedCanvas.height;
 
-        // Convert 640px coordinates to normalized 0–1.
-        x: boxX / 640,
-        y: boxY / 640,
-        width: width / 640,
-        height: height / 640
-      });
+      detections.push([x1, y1, x2, y2, classID, confidence]);
     }
 
-    console.log("[yolo] Detections:", detections.length);
-    if (detections.length > 0) console.log(detections); // just dump it all
+    // ── CHANGE #9: Non-Maximum Suppression — the critical missing piece.
+    //    Without it you get many overlapping boxes per object.
+    return this.applyNMS(detections, 0.5); // 0.5 = IoU overlap threshold
+  },
 
-    return { detections };
+  aaplyNMS(boxes, iouThreshold) {
+    boxes.sort((a, b) => b[5] - a[5]); // sort by confidence descending
+    const result = [];
+    while (boxes.length > 0) {
+      const best = boxes[0];
+      result.push(best);
+      boxes = boxes.filter(box => this.iou(best, box) < iouThreshold);
+    }
+    return result;
+
+  },
+
+  iou(box1, box2) {
+    const x1 = Math.max(box1[0], box2[0]);
+    const y1 = Math.max(box1[1], box2[1]);
+    const x2 = Math.min(box1[2], box2[2]);
+    const y2 = Math.min(box1[3], box2[3]);
+    const intersection = Math.max(0, x2 - x1) * Math.max(0, y2 - y1);
+    if (intersection === 0) return 0;
+    const area1 = (box1[2] - box1[0]) * (box1[3] - box1[1]);
+    const area2 = (box2[2] - box2[0]) * (box2[3] - box2[1]);
+    return intersection / (area1 + area2 - intersection);
   }
 };
-
 
 //MARK: detector routing
 /*
