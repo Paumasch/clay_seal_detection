@@ -15,6 +15,10 @@
 
 const STEP = 2; // only every n-th pixel checked
 
+//MARK: temporary! 
+// this really should be retrieved from config, model, some other spec 
+const classNames = ["seal", "pup"]; 
+
 
 //MARK: convert
 /*
@@ -298,7 +302,7 @@ const yoloDetector = {
     );
 
     const results = await this.session.run({
-      [this.session.inputName[0]]: tensor
+      [this.session.inputNames[0]]: tensor
     });
 
     const outputTensor = results[this.session.outputNames[0]];
@@ -365,20 +369,40 @@ const yoloDetector = {
 
       // ── CHANGE #8: scale coordinates back to the ORIGINAL canvas.
 
-      const x1 = (x -wifth / 2) / 640 * capturedCanvas.width;
+      const x1 = (x -width / 2) / 640 * capturedCanvas.width;
       const y1 = (y - height / 2) / 640 * capturedCanvas.height;
       const x2 = (x + width / 2) / 640 * capturedCanvas.width;
       const y2 = (y + height / 2) / 640 * capturedCanvas.height;
 
-      detections.push([x1, y1, x2, y2, classID, confidence]);
+      detections.push([x1, y1, x2, y2, classId, confidence]);
     }
 
     // ── CHANGE #9: Non-Maximum Suppression — the critical missing piece.
     //    Without it you get many overlapping boxes per object.
-    return this.applyNMS(detections, 0.5); // 0.5 = IoU overlap threshold
+
+    // probably best not to hardcode the threshold here?
+    const fromNMS= this.applyNMS(detections, 0.5); // 0.5 = IoU overlap threshold
+    
+    // applyNMS returns arrays, but the standard detector template returns detection objects
+    // so we have to map them to the proper structure
+    // AGAIN performs the coordinate conversion -> this really needs to be moved to a function or methdo
+    return {
+      detections: fromNMS.map(([x1, y1, x2, y2, classId, confidence]) => ({
+        class: classNames[classId] ?? `class ${classId}`,
+        confidence,
+        x: x1 / capturedCanvas.width,
+        y: y1 / capturedCanvas.height,
+        width: (x2 - x1) / capturedCanvas.width,
+        height: (y2 - y1) / capturedCanvas.height
+      }))
+    };
   },
 
-  aaplyNMS(boxes, iouThreshold) {
+  /**
+   * 
+   * @returns arrays shaped like [x1, y1, x2, y2, classId, confidence]
+   */
+  applyNMS(boxes, iouThreshold) {
     boxes.sort((a, b) => b[5] - a[5]); // sort by confidence descending
     const result = [];
     while (boxes.length > 0) {
