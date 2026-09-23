@@ -36,6 +36,7 @@ const detectionPlaceholder = document.getElementById("detectionPlaceholder");
 const video = document.getElementById("cameraVideo");
 const canvas = document.getElementById("snapshotCanvas");
 const detectionBox = document.getElementById("detectionBox");
+const Welcomeparagraph = document.getElementById("Welcomeparagraph");
 
 // detector moved to its own file detectors.js
 

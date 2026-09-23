@@ -24,6 +24,7 @@ const STRINGS = {
     detectionPlaceholder: "Detection result will appear here.",
     resetButton: "Reset",
     languagePlaceholder: "The translators don't appreciate being rushed."
+    Welcomeparagraph: "This webpage was developed as a simple demonstration of an object detection model. The model type is called YOLOv8n. The Aria-funded DronePort Project is using a similar model todetect and count the Kangia Ringed Seal Population in the Ilulissat Icefjord."
   },
 
   da: {
