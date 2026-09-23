@@ -10,8 +10,8 @@ const STRINGS = {
   en: {
     welcomeTitle: "Seal Counter",
     languageSelection: "Choose a language:",
-    startButton: "Starte",
-    appTitle: "Looking for seals?",
+    startButton: "Start",
+    //appTitle: "Looking for seals?",
     backButton: "Back",
     cameraHeading: "Camera",
     cameraPlaceholder: "Camera preview will appear here.",
@@ -29,19 +29,19 @@ const STRINGS = {
   da: {
     welcomeTitle: "Sæl Tæller",
     languageSelection: "Vælg et sprog:",
-    startButton: "Start",
-    appTitle: "Looking for seals?",
-    backButton: "Back",
-    cameraHeading: "Camera",
-    cameraPlaceholder: "Camera preview will appear here.",
-    cameraAccessFailed: "Camera access failed. Check permissions and reload.", // rename to errorCameraAccessFailed?
-    snapshotButton: "Take snapshot",
-    liveDetectionRunning: "Live detection running",
+    startButton: "Starte",
+    //appTitle: "Looking for seals?",
+    backButton: "Tilbage",
+    cameraHeading: "Kamera",
+    cameraPlaceholder: "Kameraforhåndsvisning vil vises her.",
+    cameraAccessFailed: "Kameraadgang mislykkedes. Tjek tilladelser og genindlæs.", // rename to errorCameraAccessFailed?
+    snapshotButton: "Tag billede",
+    liveDetectionRunning: "Live detektion kører",
     statusHeading: "Status",
     statusReady: "Ready.",
-    detectionHeading: "Detection",
-    detectionPlaceholder: "Detection result will appear here.",
-    resetButton: "Reset",
+    detectionHeading: "Detektion",
+    detectionPlaceholder: "Detektionsresultatet vil vises her.",
+    resetButton: "Nulstil",
     languagePlaceholder:"The translators don't appreciate being rushed."
   },
 
