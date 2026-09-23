@@ -427,4 +427,9 @@ const detectors = {
   //yolohosted: toBeAdddded // maybe
 };
 
-const
+const detector = detectors[CONFIG.ACTIVE_DETECTOR] || (() => {
+  console.error(
+    `Unknown CONFIG.ACTIVE_DETECTOR "${CONFIG.ACTIVE_DETECTOR}" in config.js — falling back to fakeDetector.`
+  );
+  return fakeDetector; // fallback
+})();
