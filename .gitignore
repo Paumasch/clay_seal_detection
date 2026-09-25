@@ -1,1 +1,4 @@
 _misc/
+
+# just ignore everything (files and directories) starting with double underscores
+__* 

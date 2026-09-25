@@ -1,3 +1,9 @@
+## git
+
+gitignore regex
+https://gist.github.com/jstnlvns/ebaa046fae16543cc9efc7f24bcd0e31
+-> the better way to do it for personal workspace: .git/info/exclude (hidden by default in file explorer)
+
 ## onnx
 
 https://onnx.ai/get-started.html  
@@ -19,6 +25,12 @@ https://netron.app/
 
 the DOM  
 https://dom.spec.whatwg.org/
+
+html (suuuuper comprehensive and indepth -> bedtime reading) 
+https://html.spec.whatwg.org/
+
+canvas performance 
+https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently
 
 ### js
 
