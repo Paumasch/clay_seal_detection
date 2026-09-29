@@ -11,7 +11,7 @@ const CONFIG = {
 
   //MODEL_CLASSES: ["Seal adult", "Seal pup"], // might as well put them here (they will be used for the actual model)
   // @Paumasch it's not THAT simple ;)
-  MODEL_CLASSES: ["person", "backpack", "bottle", "cup", "chair", "couch", "potted plant", "dining table", "laptop", "mouse", "keyboard", "cell phone"],
+  MODEL_CLASSES: ["person", "backpack", "bottle", "cup", "chair", "couch", "potted plant", "dining table", "laptop", "mouse", "cat", "keyboard", "cell phone"],
 
   LIVEDETECTION_INTERVAL_MS: 100  // time between detections in live/continuous mode (in miliseconds)
 
