@@ -317,7 +317,7 @@ const yoloDetector = {
     const detections = [];
 
     /*changed with help of mistral */
-    const numClasses = 2;
+    const numClasses = 12;
     const dims = outputTensor.dims;
     const channelsMajor =dims[1] === 4 + numClasses; //[1, 6, 8400]
     if (!channelsMajor && dims[dims.length - 1] !== 4 + numClasses) {
