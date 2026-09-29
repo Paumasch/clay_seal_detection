@@ -274,7 +274,33 @@ const yoloDetector = {
     const tempCanvas = this.tempCanvas;
 
     const ctx = tempCanvas.getContext("2d");
-    ctx.drawImage(capturedCanvas, 0, 0, 640, 640);
+
+    // bad mistral (also bring back the cat)
+    // ctx.drawImage(capturedCanvas, 0, 0, 640, 640);
+    const modelSize = 640;
+    const sourceWidth = capturedCanvas.width;
+    const sourceHeight = capturedCanvas.height;
+    
+    const scale = Math.min(
+      modelSize / sourceWidth,
+      modelSize / sourceHeight
+    );
+    
+    const resizedWidth = sourceWidth * scale;
+    const resizedHeight = sourceHeight * scale;
+    const offsetX = (modelSize - resizedWidth) / 2;
+    const offsetY = (modelSize - resizedHeight) / 2;
+    
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, modelSize, modelSize);
+    
+    ctx.drawImage(
+      capturedCanvas,
+      offsetX,
+      offsetY,
+      resizedWidth,
+      resizedHeight
+    );
 
     const imageData = ctx.getImageData(0, 0, 640, 640);
 
@@ -402,11 +428,17 @@ const yoloDetector = {
       */
 
       // ── CHANGE #8: scale coordinates back to the ORIGINAL canvas.
+      // uhm... 
+      let x1 = ((x - width / 2) - offsetX) / scale;
+      let y1 = ((y - height / 2) - offsetY) / scale;
+      let x2 = ((x + width / 2) - offsetX) / scale;
+      let y2 = ((y + height / 2) - offsetY) / scale;
 
-      const x1 = (x -width / 2) / 640 * capturedCanvas.width;
-      const y1 = (y - height / 2) / 640 * capturedCanvas.height;
-      const x2 = (x + width / 2) / 640 * capturedCanvas.width;
-      const y2 = (y + height / 2) / 640 * capturedCanvas.height;
+      // clamp it, maybe?
+      x1 = Math.max(0, Math.min(capturedCanvas.width, x1));
+      y1 = Math.max(0, Math.min(capturedCanvas.height, y1));
+      x2 = Math.max(0, Math.min(capturedCanvas.width, x2));
+      y2 = Math.max(0, Math.min(capturedCanvas.height, y2));
 
       detections.push([x1, y1, x2, y2, classId, confidence]);
     }
