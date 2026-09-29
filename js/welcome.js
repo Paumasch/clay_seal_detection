@@ -1,21 +1,29 @@
 translatePage();
 
-const languageButton = document.getElementById("languageButton");
-const languageMessage = document.getElementById("languageMessage");
+const btn = document.getElementById('languageSelection');
+const menu = document.getElementById('langMenu');
 
-function toggleLanguageMessage(event) {
-  event.stopPropagation();
+btn.addEventListener('click', () => {
+  const open = btn.getAttribute('aria-expanded') === 'true';
+  btn.setAttribute('aria-expanded', !open);
+  menu.hidden = open;
+});
 
-  const isHidden = languageMessage.hidden;
-  languageMessage.textContent = STRINGS[currentLanguage].languagePlaceholder;
-  languageMessage.hidden = !isHidden;
-  languageButton.setAttribute("aria-expanded", String(isHidden));
-}
+menu.addEventListener('click', e => {
+  const li = e.target.closest('li[role="option"]');
+  if (!li) return;
+  document.getElementById('currentFlag').src = li.dataset.flag;
+  document.getElementById('currentLabel').textContent = li.dataset.lang;
+  menu.hidden = true;
+  btn.setAttribute('aria-expanded', 'false');
+  // hook this into your i18n switch:
+  setLanguage(li.dataset.lang);
+});
 
-function hideLanguageMessage() {
-  languageMessage.hidden = true;
-  languageButton.setAttribute("aria-expanded", "false");
-}
-
-languageButton.addEventListener("click", toggleLanguageMessage);
-document.addEventListener("click", hideLanguageMessage);
+// close when clicking outside
+document.addEventListener('click', e => {
+  if (!e.target.closest('.lang-dd')) {
+    menu.hidden = true;
+    btn.setAttribute('aria-expanded', 'false');
+  }
+});

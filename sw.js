@@ -41,7 +41,10 @@ const CACHED_URLS = [
   "./assets/favicon-16x16.png",
   "./assets/seals_icon_192.png",
   "./assets/seals_icon_512.png",
-  "./assets/visual-guide-placeholder.svg"
+  ".assets/flagpack--dk.svg",
+  "assets/flagpack--gb-ukm.svg",
+  "assets/flagpack--gl.svg"
+
 ];
 
 // self.addEventListener("install", (event) => {

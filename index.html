@@ -32,22 +32,25 @@
       <!--Language Selection Dropdown-->
       <!-- The language icons need to be connected to the language in the textelements part to work-->
       <div class="language_selection_dropdown">
-        <label for="languageSelection" data-i18n="languageSelection">Choose a language:</label>
-        <select name="languageSelection" id="languageSelection" aria-label="Language selection">
-          <option value="Kalaallisut"><a class="flag-icon" href="/">
-            <img src="images/GreenlandFlag.png" alt="Greenland Flag" width="20" height="15">
-            </a>
-          </option>
-          <option value="Danish"><a class="flag-icon" href="/">
-            <img src="images/DenmarkFlag.png" alt="Denmark Flag" width="20" height="15">
-            </a>
-          </option>
-          <option value="English"><a class="flag-icon" href="/">
-            <img src="images/UKFlag.png" alt="UK Flag" width="20" height="15">
-            </a>
-          </option>
-        </select>
-      </div id= "languageMessage" role="status" hidden>
+        <label for="languageSelection" data-i18n="languageSelection">Choose a langauge:</label>
+        <button id="languageSelection" class="lang-btn" aria-haspopup="listbox" aria-expanded="false">
+          <img id="currentFlag" src="assets/flagpack--gl.svg" alt="" width="20" height="15">
+          <span></span> ▾
+        </button>
+        <ul id="langMenu" hidden>
+          <li data-lang="Kalaallisut" data-flag="assets/flagpack--gl.svg" tabindex="0">
+            <img src="assets/flagpack--gl.svg" alt="" width="20" height="15">
+          </li>
+          <li data-lang="Danish" data-flag="assets/flagpack--dk.svg" tabindex="0">
+            <img src="assets/flagpack--dk.svg" alt="" width="20" height="15">
+          </li>
+          <li data-lang="English" data-flag="assets/flagpack--gb.svg" tabindex="0">
+            <img src="assets/flagpack--gb-ukm.svg" alt="" width="20" height="15">
+          </li>
+        </ul>
+      </div>
+
+      <div id="languageMessage" role="status" hidden></div>
     </nav>
 
     <h1 id="Header">
@@ -84,3 +87,4 @@
 </footer>
 
 </html>
+
