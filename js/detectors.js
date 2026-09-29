@@ -319,16 +319,18 @@ const yoloDetector = {
     // changed manually - THIS IS A MESS
     //const numClasses = 2;
     const dims = outputTensor.dims;
-    const numClasses = dims[1] - 4 // 4 is from box values
-    const channelsMajor =dims[1] === 4 + numClasses; //[1, 6, 8400]
-    if (!channelsMajor && dims[dims.length - 1] !== 4 + numClasses) {
+    const channelsMajor = dims[1] < dims[2]; // check which one is the big (depending on layout)
+    const channelCount = channelsMajor ? dims[1] : dims[2];
+    const numClasses = channelCount - 4 // 4 is from box values
+    const numCandidates = channelsMajor ? dims[2] : dims[1]; // derive, dont hardcode 8400
+
+    if (numClasses <= 0) {
       throw new Error(
         "Unexpected output layout: " + JSON.stringify(dims)
       );
     }
 
-    const numCandidates = channelsMajor ? dims[2] : dims[1]; // derive, dont hardcode 8400
-
+    
     // -- Helper that reads output correctly for either layout
     const readCell = (row, i) => 
       channelsMajor 
