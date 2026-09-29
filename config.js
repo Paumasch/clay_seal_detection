@@ -9,8 +9,8 @@ const CONFIG = {
 
   ACTIVE_DETECTOR: "yolo",  // selects which detector to use from detectors.js (options at the very bottom)
 
-  MODEL_CLASSES: ["Seal adult", "Seal pup"], // might as well put them here
-
+  //MODEL_CLASSES: ["Seal adult", "Seal pup"], // might as well put them here (they will be used for the actual model)
+  MODEL_CLASSES: ["person", "backpack", "bottle", "cup", "chair", "couch", "potted plant", "dining table", "laptop", "mouse", "keyboard", "cell phone"]
   LIVEDETECTION_INTERVAL_MS: 100  // time between detections in live/continuous mode (in miliseconds)
 
 };
