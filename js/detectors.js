@@ -234,12 +234,8 @@ const yoloDetector = {
 
     console.log("[yolo] Loading models/yolov8n.onnx...");
 
-<<<<<<< HEAD
     // MARK: move to config
-    this.initPromise = ort.InferenceSession.create("models/best.onnx")
-=======
     this.initPromise = ort.InferenceSession.create("models/yolov8n.onnx")
->>>>>>> 0b8b30b83751434a350f3b737a41a49085882582
       .then((session) => {
         this.session = session;
         console.log("[yolo] Model loaded.", {
