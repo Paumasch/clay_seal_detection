@@ -33,6 +33,10 @@ h2 {
   font-size: medium;
 }
 
+.pageTitlelogo img {
+  clip-path: ellipse(50% 50%);
+}
+
 /*MARK: hide stuff
 */
 #cameraHeading, #statusHeading, #statusMsg {
