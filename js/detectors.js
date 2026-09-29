@@ -228,6 +228,15 @@ const yoloDetector = {
       return this.initPromise;
     }
 
+    const COCO_NAMES = ["person","bicycle","car","motorcycle","airplane","bus","train","truck","boat","traffic light","fire hydrant","stop sign","parking meter","bench","bird","cat","dog","horse","sheep","cow","elephant","bear","zebra","giraffe","backpack","umbrella","handbag","tie","suitcase","frisbee","skis","snowboard","sports ball","kite","baseball bat","baseball glove","skateboard","surfboard","tennis racket","bottle","wine glass","cup","fork","knife","spoon","bowl","banana","apple","sandwich","orange","broccoli","carrot","hot dog","pizza","donut","cake","chair","couch","potted plant","bed","dining table","toilet","tv","laptop","mouse","remote","keyboard","cell phone","microwave","oven","toaster","sink","refrigerator","book","clock","vase","scissors","teddy bear","hair drier","toothbrush"];
+
+    this.idToName = {};
+    for (const name of CONFIG.MODEL_CLASSES) {
+      const id = COCO_NAMES.indexOf(name);
+      if (id === -1) throw new Error(`"${name}" is not a COCO class`);
+      this.idToName[id] = name;
+    }
+
     if (typeof ort === "undefined") {
       throw new Error("ONNX Runtime Web is not loaded.");
     }
@@ -317,7 +326,7 @@ const yoloDetector = {
     const detections = [];
 
     /*changed with help of mistral */
-    const numClasses = 12;
+    const numClasses = 80;
     const dims = outputTensor.dims;
     const channelsMajor =dims[1] === 4 + numClasses; //[1, 6, 8400]
     if (!channelsMajor && dims[dims.length - 1] !== 4 + numClasses) {
@@ -343,18 +352,22 @@ const yoloDetector = {
       const width = readCell(2, i);
       const height = readCell(3, i);
 
-      const class0 = readCell(4, i);
-      const class1 = readCell(5, i);
+     // const class0 = readCell(4, i);
+     //  const class1 = readCell(5, i);
 
-      let classId;
-      let confidence;
+      let classId = 0;
+      let confidence = -Infinity;
 
-      if (class0 > class1) {
-        classId = 0;
-        confidence = class0;
-      } else {
-        classId = 1;
-        confidence = class1;
+      for (let c = 0; c < numClasses; c++) {
+        const score = readCell(4 + c, i);
+        if (score > confidence) {
+          confidence = score;
+          classId = c;
+        }
+      }
+
+      if (!this.idToName || !(classId in this.idToName)) {
+        continue;   // not one of the classes in your config
       }
 
       if (confidence < confidenceThreshold) {
@@ -407,7 +420,8 @@ const yoloDetector = {
     while (boxes.length > 0) {
       const best = boxes[0];
       result.push(best);
-      boxes = boxes.filter(box => this.iou(best, box) < iouThreshold);
+      boxes = boxes.filter(box => 
+        box[4] !== best[4] || this.iou(best, box) < iouThreshold);
     }
     return result;
 
