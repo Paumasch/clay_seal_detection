@@ -121,6 +121,10 @@ function drawDetection(detections) {
   detectionBox.style.height = `${det.height * 100}%`;
   detectionBox.hidden = false;
 
+  detectionBox.textContent =
+  `${det.class} ${(det.confidence).toFixed(2)}`;
+
+  // can get removed
   detectionPlaceholder.textContent =
     `${det.class} (${Math.round(det.confidence * 100)}%)`;
 }
