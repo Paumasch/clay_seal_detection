@@ -234,6 +234,7 @@ const yoloDetector = {
 
     console.log("[yolo] Loading models/best.onnx...");
 
+    // MARK: move to config
     this.initPromise = ort.InferenceSession.create("models/best.onnx")
       .then((session) => {
         this.session = session;
