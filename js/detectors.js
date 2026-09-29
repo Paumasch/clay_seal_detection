@@ -15,9 +15,6 @@
 
 const STEP = 2; // only every n-th pixel checked
 
-// grab from config (best to move this as part of model metadata, later. works for now)
-const classNames = CONFIG.MODEL_CLASSES;
-
 
 //MARK: convert
 /*
@@ -317,14 +314,16 @@ const yoloDetector = {
 
     const detections = [];
 
+    //MARK: hardcoded stuff
     /*changed with help of mistral */
-    const numClasses = 2;
+    // changed manually - THIS IS A MESS
+    //const numClasses = 2;
     const dims = outputTensor.dims;
+    const numClasses = dims[1] - 4 // 4 is from box values
     const channelsMajor =dims[1] === 4 + numClasses; //[1, 6, 8400]
     if (!channelsMajor && dims[dims.length - 1] !== 4 + numClasses) {
       throw new Error(
-        "Unexpected output layout: " + JSON.stringify(dims) +
-        " - expected [1, " + (4 + numClasses) + ", N] or [1, N, " + (4 + numClasses) + "]"
+        "Unexpected output layout: " + JSON.stringify(dims)
       );
     }
 
@@ -332,32 +331,65 @@ const yoloDetector = {
 
     // -- Helper that reads output correctly for either layout
     const readCell = (row, i) => 
-      channelsMajor ? output[row * numCandidates + i]
+      channelsMajor 
+      ? output[row * numCandidates + i]
       : output[i * (4 + numClasses) + row];
+
+
+    //MARK: filter unwanted classes 
+    const allowedClasses = new Set(CONFIG.MODEL_CLASSES);
+
+    // the class names I assume the model (coco) uses
+    // hardcoded because it's just for the demo
+    const modelClassNames = [
+      "person", "bicycle", "car", "motorcycle", "airplane",
+      "bus", "train", "truck", "boat", "traffic light",
+      "fire hydrant", "stop sign", "parking meter", "bench", "bird",
+      "cat", "dog", "horse", "sheep", "cow",
+      "elephant", "bear", "zebra", "giraffe", "backpack",
+      "umbrella", "handbag", "tie", "suitcase", "frisbee",
+      "skis", "snowboard", "sports ball", "kite", "baseball bat",
+      "baseball glove", "skateboard", "surfboard", "tennis racket",
+      "bottle", "wine glass", "cup", "fork", "knife",
+      "spoon", "bowl", "banana", "apple", "sandwich",
+      "orange", "broccoli", "carrot", "hot dog", "pizza",
+      "donut", "cake", "chair", "couch", "potted plant",
+      "bed", "dining table", "toilet", "tv", "laptop",
+      "mouse", "remote", "keyboard", "cell phone", "microwave",
+      "oven", "toaster", "sink", "refrigerator", "book",
+      "clock", "vase", "scissors", "teddy bear", "hair drier",
+      "toothbrush"
+    ];
+
 
     const confidenceThreshold = 0.4;
 
     for (let i = 0; i < numCandidates; i++) {
-
       const x = readCell(0, i);
       const y = readCell(1, i);
       const width = readCell(2, i);
       const height = readCell(3, i);
 
-      const class0 = readCell(4, i);
-      const class1 = readCell(5, i);
+      // reset
+      let classId = -1;
+      let confidence = -1; 
 
-      let classId;
-      let confidence;
-
-      if (class0 > class1) {
-        classId = 0;
-        confidence = class0;
-      } else {
-        classId = 1;
-        confidence = class1;
+      // go through every className and check if any detection
+      // currently grabs the first, ignoring potential double candidates (could be person or donut)
+      for (let j = 0; j < numClasses; j++){
+        let score = readCell(4+j, i);
+        if (score > confidence){
+          confidence = score;
+          classId = j;
+        }
       }
 
+      // grab name
+      const className = modelClassNames[classId];
+      // filter if not in allowed
+      if (!allowedClasses.has(className)) continue;
+
+      // filter if below our threshold
       if (confidence < confidenceThreshold) {
         continue;
       }
@@ -388,7 +420,7 @@ const yoloDetector = {
     // AGAIN performs the coordinate conversion -> this really needs to be moved to a function or methdo
     return {
       detections: fromNMS.map(([x1, y1, x2, y2, classId, confidence]) => ({
-        class: classNames[classId] ?? `class ${classId}`,
+        class: modelClassNames[classId] ?? `class ${classId}`,
         confidence,
         x: x1 / capturedCanvas.width,
         y: y1 / capturedCanvas.height,
