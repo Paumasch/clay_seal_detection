@@ -16,14 +16,38 @@ vh, vw .. relative to viewport's height/width ("viewport" = window in browser, n
   display: none !important;
 }
 
+
+
+/* 
+one width to rule them all 
+500px? 
+it's very much mobile-first
+*/
+:root {
+  --content-width: 500px;
+  --page-padding: 1rem;
+}
+
 body {
-  margin: 1rem;
+  margin: 0; /*margin: 1rem; */ 
   font-family: sans-serif;
 }
 
+main, footer {
+  width: min(
+    calc(100% - (2 * var(--page-padding))),
+    var(--content-width)
+  );
+  margin-inline: auto;
+}
+
 main {
-  max-width: 50rem; /* 50rem;*/
-  margin: 0 auto;
+  margin-top: var(--page-padding);
+}
+
+footer {
+  margin-top: 2rem;
+  /* padding-bottom: var(--page-padding); */
 }
 
 h1 {
@@ -133,7 +157,7 @@ button,
 .viewport {
   position: relative;
   width: 100%;
-  max-width: 500px;
+  max-width: var(--content-width);
   margin: 1rem 0;
   background: #000;
 }
