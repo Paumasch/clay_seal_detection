@@ -4,7 +4,7 @@ Simple webpage interface for ~~object~~ seal detection
 
 ## try it live
 
-The current version is deployed via GitHub Pages: `https://paumasch.github.io/clay_seal_detection`
+The current version is deployed via [GitHub Pages](https://paumasch.github.io/clay_seal_detection)
 
 ## run locally
 
