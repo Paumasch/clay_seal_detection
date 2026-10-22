@@ -122,10 +122,22 @@ button,
 
 .top-nav {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
-  min-height: 2rem;
+  width: 100%;
+  min-height: 3rem;
   margin-bottom: 1rem;
+}
+
+.home-link {
+  display: block;
+  line-height: 0;
+}
+
+.home-logo {
+  display: block;
+  width: 120px;
+  height: auto;
 }
 
 .language-area {

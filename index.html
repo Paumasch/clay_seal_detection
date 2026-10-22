@@ -18,8 +18,20 @@
 <!-- remove `class="debug-layout"` when done fiddling -->
 <body class="debug-layout" style="background-color:rgb(180, 180, 180);">
   <main>
+
     <nav class="top-nav" aria-label="Primary navigation">
-      <span aria-hidden="true"></span>
+
+      <a class="home-link" href="/" aria-label="Seal Counter home">
+        <img
+          class="home-logo"
+          src="assets/seal-logo-nobackground_2.png"
+          onmouseover="this.src='assets/seal-logo-nobackground_2_detected_wink.png'"
+          onmouseout="this.src='assets/seal-logo-nobackground_2.png'"
+          alt="Seal Counter"
+          width="120"
+          height="50">
+      </a>
+
       <!--Language Selection Dropdown-->
       <!-- The language icons need to be connected to the language in the textelements part to work-->
       <div class="language_selection_dropdown">
@@ -39,15 +51,8 @@
           </li>
         </ul>
       </div>
-
-      <div id="languageMessage" role="status" hidden></div>
+      
     </nav>
-
-    <h1 id="Header">
-        <a class="pageTitlelogo" href="/">
-            <img src="assets/seal_detection_front_logo.png" width="300" height="230">
-        </a>
-    </h1>   
 
     <h3> 
         <p id = "Welcomeparagraph" class = "welcome-paragraph" data-i18n="Welcomeparagraph">
