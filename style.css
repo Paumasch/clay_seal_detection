@@ -16,7 +16,20 @@ vh, vw .. relative to viewport's height/width ("viewport" = window in browser, n
   display: none !important;
 }
 
-
+/* temporary layout debugging */
+.debug-layout main,
+.debug-layout footer,
+.debug-layout .top-nav,
+.debug-layout .language_selection_dropdown,
+.debug-layout .viewport {
+  outline: 1px dashed red;
+}
+.debug-layout h1,
+.debug-layout .button,
+.debug-layout .welcome-paragraph,
+.debug-layout .footer-text {
+  outline: 1px dashed blue;
+}
 
 /* 
 one width to rule them all 

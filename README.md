@@ -37,6 +37,13 @@ When adding or removing files, remember to add/remove them in `sw.js`. No wildca
 
 ## general notes 
 
+### well well well  
+
+We've kind of slacked off on keeping this up to date.  
+
+One potential future improvement:  
+-[ ] automatically adjust the detection threshold (if it doesn't detect any seals, reduce it, if it seems to detect too many, increase it)
+
 ### SO MANY FILES!!  
 
 bold stuff is probably the stuff you care about
