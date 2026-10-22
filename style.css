@@ -58,10 +58,97 @@ main {
   margin-top: var(--page-padding);
 }
 
+/*MARK: shenanigans
+ai-slop
+*/
+
 footer {
   margin-top: 2rem;
   /* padding-bottom: var(--page-padding); */
 }
+
+.footer-name {
+  position: relative;
+  display: inline-block;
+  width: 4em;
+  vertical-align: baseline;
+  text-align: center;
+  transition: width 350ms ease;
+}
+
+.footer-text a {
+  text-decoration: none;
+}
+
+.footer-name-combined {
+  display: inline-block;
+}
+
+.footer-name-split {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  display: inline-flex;
+  justify-content: center;
+  gap: 0.25em;
+  white-space: nowrap;
+  transform: translateX(-50%) scaleX(0.2);
+  transform-origin: center;
+  transition: opacity 250ms ease, transform 350ms ease;
+}
+
+.footer-name-combined {
+  transform: scaleX(1);
+}
+
+.footer-name-split {
+  opacity: 0;
+}
+
+.footer-name-split span {
+  transition: transform 350ms ease;
+}
+
+.footer-name-split span:first-child {
+  transform: translateX(0.55em);
+}
+
+.footer-name-split span:last-child {
+  transform: translateX(-0.55em);
+}
+
+.footer-text a:hover .footer-name-combined,
+.footer-text a:focus-visible .footer-name-combined {
+  opacity: 0;
+  transform: scaleX(0.7);
+}
+
+.footer-text a:hover .footer-name,
+.footer-text a:focus-visible .footer-name {
+  width: 9.5em;
+}
+
+.footer-text a:hover .footer-name-split,
+.footer-text a:focus-visible .footer-name-split {
+  opacity: 1;
+  transform: translateX(-50%) scaleX(1);
+}
+
+.footer-text a:hover .footer-name-split span,
+.footer-text a:focus-visible .footer-name-split span {
+  transform: translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-name-combined,
+  .footer-name-split,
+  .footer-name-split span,
+  .footer-name {
+    transition-duration: 0.01ms;
+  }
+}
+/*MARK: /shenanigans
+*/
 
 h1 {
   font-size: large;

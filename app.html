@@ -100,7 +100,7 @@
 
     <details class="detection-details">
       <summary id="detectionHeading" data-i18n="detectionHeading">
-        Click for additional information
+        Click here for additional information
       </summary>
 
       <div id="detectionPlaceholder" aria-live="polite">
@@ -122,8 +122,18 @@
 </body>
 
 <footer>
-  <p class="footer-text" data-i18n="footerText">
-    &copy; <a href="https://github.com/Paumasch/clay_seal_detection">A Gårmitz production.</a>
+  <p class="footer-text">
+    &copy; <a href="https://github.com/Paumasch/clay_seal_detection" aria-label="A Gårmitz production.">A
+      <span class="footer-name" aria-hidden="true">
+        <span class="footer-name-combined">Gårmitz</span>
+        <span class="footer-name-split">
+          <span>Gårdman</span>
+          <span class="footer-name-amp">&amp;</span>
+          <span>Schmitz</span>
+        </span>
+      </span>
+      production.</a>
+  </p>
 </footer>
 
 </html>
