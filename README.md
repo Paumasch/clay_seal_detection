@@ -4,7 +4,7 @@ Simple webpage interface for ~~object~~ seal detection
 
 ## try it live
 
-The current version is deployed via GitHub Pages: `https://smitzkar.github.io/seals/`
+The current version is deployed via GitHub Pages: `https://paumasch.github.io/clay_seal_detection`
 
 ## run locally
 
@@ -14,7 +14,7 @@ in root of directory/repo, run: `python -m http.server 8000`
 
 to open on computer browser, visit `http://localhost:8000/`
 
-to test on phone:
+to test on phone (note that depending on browser, the camera stream might not be available over unsecured http):
 - ensure that phone and computer are on same network
 - find computer's ip address (something like `192.168.30.1`): 
     - linux: 
