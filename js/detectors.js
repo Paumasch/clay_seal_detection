@@ -229,10 +229,10 @@ const yoloDetector = {
       throw new Error("ONNX Runtime Web is not loaded.");
     }
 
-    console.log("[yolo] Loading models/yolov8n.onnx...");
+    console.log("[yolo] Loading models/clay_seals_2.onnx...");
 
     // MARK: move to config
-    this.initPromise = ort.InferenceSession.create("models/yolov8n.onnx")
+    this.initPromise = ort.InferenceSession.create("models/clay_seals_2.onnx")
       .then((session) => {
         this.session = session;
         console.log("[yolo] Model loaded.", {
