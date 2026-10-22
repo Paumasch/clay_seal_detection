@@ -81,7 +81,7 @@ h2 {
 
 /*MARK: hide stuff
 */
-#cameraHeading, #statusHeading, #statusMsg {
+#statusHeading, #statusMsg {
   display:none;
 }
 .sr-only {
@@ -113,11 +113,31 @@ button,
 }
 
 .camera-placeholder {
-  min-height: 12rem;
+  min-height: 375px; /* for 500x375 camera (doesn't work yet) */
   display: grid;
   place-items: center;
   border: 1px solid currentColor;
   margin: 1rem 0;
+}
+
+.camera-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  width: 100%;
+}
+
+.camera-controls > * {
+  flex: 1 1 0; /* every element gets an equal share of the width */
+  min-width: 0;
+}
+
+.camera-controls button,
+.camera-controls .control-button {
+  box-sizing: border-box;
+  margin: 0;
+  text-align: center;
 }
 
 .top-nav {
@@ -166,6 +186,16 @@ button,
   min-height: 1.5em;
 }
 
+.detection-details {
+  margin-top: 1rem;
+}
+
+.detection-details summary {
+  cursor: pointer;
+  font-size: medium;
+  font-weight: bold;
+}
+
 /*MARK: viewport 
 * - to let css handle the scaling and positioning of the bounding/detection-box, keep:
 *   - position: relative for viewport, and
@@ -179,14 +209,17 @@ button,
   position: relative;
   width: 100%;
   max-width: var(--content-width);
+  aspect-ratio: 4 / 3; /* assuming this for now */
   margin: 1rem 0;
+  overflow: hidden;
   background: #000;
 }
 
 .camera-feed {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: contain; /* or cover, check which works better */
 }
 
 .detection-box {

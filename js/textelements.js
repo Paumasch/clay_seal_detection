@@ -20,7 +20,7 @@ const STRINGS = {
     liveDetectionRunning: "Live detection running",
     statusHeading: "Status",
     statusReady: "Ready.",
-    detectionHeading: "Detection",
+    detectionHeading: "Click for additional information",
     detectionPlaceholder: "Detection result will appear here.",
     resetButton: "Reset",
     languagePlaceholder: "The translators don't appreciate being rushed.",

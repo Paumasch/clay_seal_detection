@@ -5,4 +5,4 @@ TO DO LIST FOR WEBSITE
 -[] add start and stop button to app.html
 -[] make buttons (Paula)
 -[x] make the logo seal wink on hover!!
--[]
+-[?] merge snapshot and reset buttons into one
