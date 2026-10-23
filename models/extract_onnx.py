@@ -2,10 +2,15 @@
 
 or just use a proper tool like: https://netron.app/
 """
-
+import sys
 import onnx
 
-model = onnx.load("best.onnx")
+# optionally specify model from command line
+if sys.argv[0]: 
+    print("checking hardcoded model")
+    model = onnx.load("best.onnx")
+else:
+    model = onnx.load(sys.argv[0])    
 
 print("Inputs:")
 for x in model.graph.input:
