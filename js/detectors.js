@@ -210,7 +210,7 @@ const brightDetector = {
 *
 * NOT production code yet.
 * Assumes:
-* - model input: [1, 3, 640, 640]
+* - model input: [1, 3, 640, 640]    (really? yes)
 * - model output: [1, 6, 8400]
 * - output format: [x, y, width, height, class0, class1]
 */

@@ -146,14 +146,22 @@ async function detectCurrentFrame() {
     canvas.height
   );
 
+  // crude debugging
+  console.debug("[capture]", {
+    videoWidth: video.videoWidth,
+    videoHeight: video.videoHeight,
+    canvasWidth: canvas.width,
+    canvasHeight: canvas.height,
+    orientation: video.videoWidth >= video.videoHeight
+      ? "landscape"
+      : "portrait"
+  });
+
   // runs snapshot through detector
   const result = await detector.detect(canvas);
 
-  // temporary fix
-  // there's currently no hard cancellation, so the last one can get drawn after supposedly stopped
-  if (!liveDetection){
-    return result;
-  }
+  // crude debugging
+  console.log("[currentFrame] Frame processed:", {detections: result.detections.length});
 
   // draws bounding box(es) / updates overlay
   drawDetection(result.detections);
@@ -180,7 +188,6 @@ async function runLiveDetection() {
   while (liveDetection) {
     try {
       const result = await detectCurrentFrame();
-      console.log("[live] Frame processed:", {detections: result.detections.length});
     } catch (error) {
       console.error("[live] Detection failed:", error);
       statusElement.textContent = "Detection failed. Check the console.";
@@ -235,27 +242,11 @@ snapshotButton.addEventListener("click", async () => {
   if (liveDetection) {
     stopLiveDetection();
   }
-
-  canvas.width = video.videoWidth;
-  canvas.height = video.videoHeight;
-
-  canvas.getContext("2d").drawImage(
-    video,
-    0,
-    0,
-    canvas.width,
-    canvas.height
-  );
-
   showSnapshotView();
 
-  statusElement.textContent = "Analysing...";
-  detectionPlaceholder.textContent = "";
-
-  const result = await detector.detect(canvas);
+  detectCurrentFrame();
 
   statusElement.textContent = STRINGS[currentLanguage].statusReady;
-  drawDetection(result.detections);
 });
 
 
