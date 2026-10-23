@@ -49,8 +49,13 @@ liveDetectionIndicator.setAttribute("aria-label", STRINGS[currentLanguage].liveD
 
 async function startCamera() {
   try {
+    // politely request 480x640 resolution from camera
     const stream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: "environment" }
+      video: {
+        facingMode: { ideal: "environment" },
+        width: { ideal: 480 },
+        height: { ideal: 640 }
+      }
     });
     video.srcObject = stream;
   } catch (error) {
@@ -136,6 +141,9 @@ function drawDetection(detections) {
 async function detectCurrentFrame() {
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
+
+  // even cruder debugging, as console.debug apparently doesn't show up via remote debugging
+  console.log("[currentFrame] canvas: " + canvas.width + ":" + canvas.height);
 
   // creates snapshot
   canvas.getContext("2d").drawImage(

@@ -25,6 +25,15 @@ to test on phone (note that depending on browser, the camera stream might not be
         - look for `Wireless Lan adapter` and the corresponding IPv4 Address 
 - open browser and visit `http://<your.computer's.ip.address>`
 
+## remote debugging (mobile browser)
+
+Setting up proper logging is too much effort for this. Devtools and console.log are good enough on desktop, but aren't available on mobile browsers. To work around this limitation (using android and chrome): 
+
+- enable usb debugging in developer tools  
+- connect phone to laptop/computer  
+- on laptop, open chrome and visit `chrome://inspect/#devices`, then inspect the relevant page
+
+Alternatively, use something like [Eruda](https://github.com/liriliri/eruda) or [Chii](https://github.com/liriliri/chii)
 
 ## update checklist
 
