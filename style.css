@@ -70,13 +70,15 @@ footer {
 .footer-name {
   position: relative;
   display: inline-block;
-  width: 4em;
+  width: 3.5em;
   vertical-align: baseline;
   text-align: center;
   transition: width 350ms ease;
 }
 
 .footer-text a {
+  color: inherit;
+  font: inherit;
   text-decoration: none;
 }
 
@@ -105,44 +107,44 @@ footer {
   opacity: 0;
 }
 
-.footer-name-split span {
+.footer-name-split a {
   transition: transform 350ms ease;
 }
 
-.footer-name-split span:first-child {
+.footer-name-split a:first-child {
   transform: translateX(0.55em);
 }
 
-.footer-name-split span:last-child {
+.footer-name-split a:last-child {
   transform: translateX(-0.55em);
 }
 
-.footer-text a:hover .footer-name-combined,
-.footer-text a:focus-visible .footer-name-combined {
+.footer-name:hover .footer-name-combined,
+.footer-name:focus-within .footer-name-combined {
   opacity: 0;
   transform: scaleX(0.7);
 }
 
-.footer-text a:hover .footer-name,
-.footer-text a:focus-visible .footer-name {
-  width: 9.5em;
+.footer-name:hover,
+.footer-name:focus-within {
+  width: 9em;
 }
 
-.footer-text a:hover .footer-name-split,
-.footer-text a:focus-visible .footer-name-split {
+.footer-name:hover .footer-name-split,
+.footer-name:focus-within .footer-name-split {
   opacity: 1;
   transform: translateX(-50%) scaleX(1);
 }
 
-.footer-text a:hover .footer-name-split span,
-.footer-text a:focus-visible .footer-name-split span {
+.footer-name:hover .footer-name-split a,
+.footer-name:focus-within .footer-name-split a {
   transform: translateX(0);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .footer-name-combined,
   .footer-name-split,
-  .footer-name-split span,
+  .footer-name-split a,
   .footer-name {
     transition-duration: 0.01ms;
   }
