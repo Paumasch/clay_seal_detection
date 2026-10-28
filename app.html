@@ -16,13 +16,12 @@
   <script src="js/register-sw.js"></script>
 </head>
 
-<!-- remove `class="debug-layout"` when done fiddling -->
-<body class="debug-layout" style="background-color:rgb(180, 180, 180);">
+<body>
   <main>
 
     <nav class="top-nav" aria-label="Primary navigation">
 
-      <a class="home-link" href="/" aria-label="Seal Counter home">
+      <a class="home-link" href="./index.html" aria-label="Seal Counter home">
         <img
           class="home-logo"
           src="assets/seal-logo-nobackground_2.png"
@@ -39,7 +38,6 @@
         <button id="languageSelection" class="lang-btn" aria-haspopup="listbox" aria-expanded="false"
           aria-label="Choose a language">
           <img id="currentFlag" src="assets/flagpack--gl.svg" alt="" width="20" height="15">
-          <span id="currentLanguageLabel">English</span> ▾
         </button>
         <ul id="langMenu" hidden role="listbox">
           <li data-language="kl" role="option" tabindex="0">
@@ -76,26 +74,31 @@
 
     <section aria-labelledby="cameraControls" class="camera-controls" aria-label="Camera controls">
 
-      <a class="controlbutton" href="./" aria-label="Back to home">
-        <span class="control-icon" aria-hidden="true">←</span>
-        <span class="control-label" data-i18n="backButton">Back</span>
-      </a>
+      <div class="camera-control camera-control-back">
+        <span class="control-text control-text-back">Back</span>
+        <a class="controlbutton back-button" href="./index.html" aria-label="Go back">
+          <img src="assets/icon-back.svg" alt="" width="22" height="22">
+        </a>
+      </div>
 
-      <button id="liveDetectionButton" class="controlbutton" type="button" aria-label="Start live detection">
-        <img id="liveDetectionIcon" src="assets/play.png" alt="Start live detection" width="20" height="20">
+      <button id="liveDetectionButton" class="controlbutton primary" type="button" aria-label="Start live detection">
+        <img id="liveDetectionIcon" src="assets/icon-play.svg" alt="Start live detection" width="28" height="28">
       </button>
 
-      <button id="snapshotButton" class="controlbutton" type="button" aria-label="Take snapshot">
-        <img src="assets/snapshot.png" alt="Take snapshot" width="20" height="20">
-      </button>
-
-      <!-- merge with snapshotButton? -->
-      <button id="resetButton" class="controlbutton" type="button">
-        <span class="control-icon" aria-hidden="true">↺</span>
-        <span class="control-label" data-i18n="resetButton">
-        </span>
-      </button>
+      <div class="camera-control camera-control-snapshot">
+        <button id="snapshotButton" class="controlbutton" type="button" aria-label="Take snapshot">
+          <img src="assets/icon-snapshot.svg" alt="Take snapshot" width="20" height="20">
+        </button>
+        <span id="snapshotLabel" class="control-text control-text-snapshot">Snapshot</span>
+      </div>
     </section>
+
+    <h3> 
+      <p id="Explainparagraph" class="explain-paragraph" data-i18n="explainParagraph">
+        Press the start camera button when you are read to begin the detection. The camera will open and you can point it at the object you want to detect. The model will then try to detect the object and display the result on the screen.          
+      </p>
+    </h3>
+
 
     <!-- to be deleted -->
     <section aria-labelledby="statusHeading">
@@ -114,11 +117,6 @@
     </details>
 
 
-    <h3> 
-      <p id="Explainparagraph" class="explain-paragraph" data-i18n="explainParagraph">
-        Press the start camera button when you are read to begin the detection. The camera will open and you can point it at the object you want to detect. The model will then try to detect the object and display the result on the screen.          
-      </p>
-    </h3>
 
   </main>
 

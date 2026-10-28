@@ -18,7 +18,7 @@ vh, vw .. relative to viewport's height/width ("viewport" = window in browser, n
 
 /*MARK: debug*/
 /* temporary layout debugging */
-.debug-layout main,
+/* .debug-layout main,
 .debug-layout footer,
 .debug-layout .top-nav,
 .debug-layout .language_selection_dropdown,
@@ -30,7 +30,7 @@ vh, vw .. relative to viewport's height/width ("viewport" = window in browser, n
 .debug-layout .welcome-paragraph,
 .debug-layout .footer-text {
   outline: 1px dashed blue;
-}
+} */
 
 /* 
 one width to rule them all 
@@ -43,8 +43,10 @@ it's very much mobile-first
 }
 
 body {
-  margin: 0; /*margin: 1rem; */ 
+  margin: 0;
   font-family: sans-serif;
+  background: #f4f4f4;
+  color: #1c1c1c;
 }
 
 main, footer {
@@ -57,6 +59,11 @@ main, footer {
 
 main {
   margin-top: var(--page-padding);
+  padding: 1rem 1rem 0.5rem;
+  border-radius: 1.5rem;
+  background: #ffffff;
+  box-shadow: 0 0.75rem 1.5rem rgba(15, 23, 42, 0.08);
+  border: 1px solid rgba(15, 23, 42, 0.06);
 }
 
 /*MARK: shenanigans
@@ -163,30 +170,60 @@ h2 {
 .language_selection_dropdown {
   position: relative;
   display: inline-block;
-  z-index: 10;
+  z-index: 20;
 }
 .lang-btn {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 12px;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  /* box-shadow: 0 0.35rem 0.7rem rgba(15, 23, 42, 0.06); */
   cursor: pointer;
+  font: inherit;
+}
+.lang-btn img {
+  display: block;
+  width: 20px;
+  height: 15px;
+  border-radius: 2px;
+}
+#currentLanguageLabel {
+  display: none;
+}
+.lang-caret {
+  font-size: 0.8rem;
+  color: #4b5563;
 }
 #langMenu {
   position: absolute;
-  top: 100%;
-  left: 0;
+  top: calc(100% + 0.45rem);
+  right: 0;
   z-index: 20;
-  margin: 4px 0 0;
-  padding: 0;
+  margin: 0;
+  padding: 0.25rem;
   list-style: none;
   background: #fff;
-  border: 1px solid #ccc;
-  min-width: 150px;
-  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 0.85rem;
+  min-width: 160px;
+  box-shadow: 0 0.65rem 1.2rem rgba(15, 23, 42, 0.12);
 }
-#langMenu li { display: flex; align-items: center; gap: 8px; padding: 6px 12px; cursor: pointer; }
-#langMenu li:hover { background: #eee; }
+#langMenu li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.7rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+#langMenu li:hover,
+#langMenu li:focus-visible {
+  background: #f3f4f6;
+}
 
 /*MARK: hide stuff
 */
@@ -205,8 +242,7 @@ h2 {
 }
 
 
-button,
-.lang-btn {
+button {
   display: inline-block;
   margin: 0.5rem 0;
   padding: 0.6rem 1rem;
@@ -231,23 +267,114 @@ button,
 }
 
 .camera-controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  --camera-control-gap: 0.85rem;
+  --camera-button-scale: 1.25;
+  --camera-side-button-size: 4rem;
+  --camera-primary-button-size: 4.75rem;
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
+  column-gap: var(--camera-control-gap);
   width: 100%;
+  margin-top: -3.5rem; /* to make it overlap with viewport */
+  padding: 0.25rem 0 0.5rem;
 }
 
-.camera-controls > * {
-  flex: 1 1 0; /* every element gets an equal share of the width */
-  min-width: 0;
+.camera-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
 }
 
-.camera-controls button,
-.camera-controls .control-button {
-  box-sizing: border-box;
-  margin: 0;
-  text-align: center;
+.camera-control-back {
+  grid-column: 1;
+  justify-self: end;
+  flex-direction: row;
+}
+
+.camera-control-snapshot {
+  grid-column: 3;
+  justify-self: start;
+  flex-direction: row;
+}
+
+#liveDetectionButton {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.controlbutton,
+.controlbutton:focus-visible {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #111827;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 999px;
+  box-shadow: 0 0.5rem 1rem rgba(15, 23, 42, 0.08);
+  text-decoration: none;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+  box-shadow: 0 0 1rem 0px rgba(5, 37, 107, 0.91);
+}
+
+.controlbutton:active {
+  transform: scale(0.97);
+}
+
+.controlbutton img {
+  display: block;
+  width: 1.2rem;
+  height: 1.2rem;
+  object-fit: contain;
+}
+
+.back-button {
+  width: calc(var(--camera-side-button-size) * var(--camera-button-scale));
+  height: calc(var(--camera-side-button-size) * var(--camera-button-scale));
+  padding: 0;
+  border-radius: 50%;
+}
+
+#liveDetectionButton {
+  width: calc(var(--camera-primary-button-size) * var(--camera-button-scale));
+  height: calc(var(--camera-primary-button-size) * var(--camera-button-scale));
+  padding: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffffff 0%, #ececec 100%);
+  border-color: rgba(17, 24, 39, 0.08);
+  /*box-shadow: 0 0.75rem 1.25rem rgba(17, 24, 39, 0.12);*/
+  box-shadow: 0 0 1rem 0px rgba(5, 37, 107, 0.91);
+}
+
+#liveDetectionButton img {
+  width: calc(1.65rem * var(--camera-button-scale));
+  height: calc(1.65rem * var(--camera-button-scale));
+}
+
+#snapshotButton {
+  width: calc(var(--camera-side-button-size) * var(--camera-button-scale));
+  height: calc(var(--camera-side-button-size) * var(--camera-button-scale));
+  padding: 0;
+  border-radius: 50%;
+}
+
+#snapshotButton img {
+  width: calc(1.05rem * var(--camera-button-scale));
+  height: calc(1.05rem * var(--camera-button-scale));
+}
+
+.control-text {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #111827;
+}
+
+.camera-control-snapshot .control-text {
+  margin-left: 0.15rem;
 }
 
 .top-nav {
@@ -256,6 +383,7 @@ button,
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
   width: 100%;
   min-height: 3rem;
   margin-bottom: 1rem;
@@ -263,14 +391,25 @@ button,
 }
 
 .home-link {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 7rem;
+  padding: 0.45rem 0rem;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  /* box-shadow: 0 0.45rem 0.85rem rgba(15, 23, 42, 0.06); */
   line-height: 0;
 }
 
 .home-logo {
   display: block;
-  width: 120px;
+  width: 7.5rem;
   height: auto;
+  max-height: 2.8rem;
+  object-fit: contain;
+  filter: drop-shadow(0 0.2rem 0.2rem rgba(15, 23, 42, 0.08));
 }
 
 .language-area {
@@ -322,10 +461,12 @@ button,
   position: relative;
   width: 100%;
   max-width: var(--content-width);
-  aspect-ratio: 3 / 4; /* assuming this for now */
+  aspect-ratio: 3 / 4;
   margin: 1rem 0;
   overflow: hidden;
+  border-radius: 1.5rem;
   background: #000;
+  box-shadow: inset 0 0 0 1px rgba(17, 24, 39, 0.08);
 }
 
 .camera-feed {
@@ -333,6 +474,7 @@ button,
   width: 100%;
   height: 100%;
   object-fit: cover;
+  background: #000;
 }
 
 .detection-box {
@@ -357,7 +499,7 @@ button,
 .model-status-overlay {
   position: absolute;
   left: 50%;
-  bottom: 0.75rem;
+  bottom: 2.2rem;
   transform: translateX(-50%);
   max-width: calc(100% - 1.5rem);
   padding: 0.35rem 0.75rem;

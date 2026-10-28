@@ -28,9 +28,9 @@ translatePage(); // from strings.js, applies localisation
 
 const statusElement = document.getElementById("statusMsg");
 const snapshotButton = document.getElementById("snapshotButton");
+const snapshotLabel = document.getElementById("snapshotLabel");
 const liveDetectionButton = document.getElementById("liveDetectionButton");
 const liveDetectionIndicator = document.getElementById("liveDetectionIndicator");
-const resetButton = document.getElementById("resetButton");
 const detectionPlaceholder = document.getElementById("detectionPlaceholder");
 const modelStatus = document.getElementById("modelStatus");
 const video = document.getElementById("cameraVideo");
@@ -96,11 +96,24 @@ function updateRuntimeText() {
   const liveDetectionLabel = liveDetection
     ? getText("stopLiveDetection")
     : getText("startLiveDetection");
+  const liveDetectionIcon = document.getElementById("liveDetectionIcon");
+
   liveDetectionButton.setAttribute("aria-label", liveDetectionLabel);
   liveDetectionIndicator.setAttribute("aria-label", getText("liveDetectionRunning"));
-  liveDetectionButton.querySelector("img").alt = liveDetectionLabel;
-  snapshotButton.querySelector("img").alt = getText("snapshotButton");
-  resetButton.setAttribute("aria-label", getText("resetButton"));
+
+  if (liveDetectionIcon) {
+    liveDetectionIcon.src = liveDetection ? "assets/icon-pause.svg" : "assets/icon-play.svg";
+    liveDetectionIcon.alt = liveDetectionLabel;
+  }
+
+  if (snapshotLabel) {
+    snapshotLabel.textContent = canvas.hidden ? "Snapshot" : "Reset";
+  }
+
+  snapshotButton.setAttribute(
+    "aria-label",
+    canvas.hidden ? getText("snapshotButton") : getText("resetButton")
+  );
 }
 
 document.addEventListener("languagechange", updateRuntimeText);
@@ -115,8 +128,8 @@ async function startCamera() {
     const stream = await navigator.mediaDevices.getUserMedia({
       video: {
         facingMode: { ideal: "environment" },
-        width: { ideal: 720 },
-        height: { ideal: 960 },
+        // width: { ideal: 720 },
+        // height: { ideal: 960 },
         aspectRatio: { ideal: 3 / 4 }
       }
     });
@@ -139,8 +152,6 @@ function showLiveView() {
   liveDetectionIndicator.hidden = true;
 
   snapshotButton.hidden = false;
-  resetButton.hidden = true;
-
   liveDetectionButton.hidden = false;
   updateRuntimeText();
 }
@@ -150,9 +161,7 @@ function showSnapshotView() {
   canvas.hidden = false;
   liveDetectionIndicator.hidden = true;
 
-  snapshotButton.hidden = true;
-  resetButton.hidden = false;
-
+  snapshotButton.hidden = false;
   liveDetectionButton.hidden = false;
   updateRuntimeText();
 }
@@ -163,8 +172,6 @@ function showLiveDetectionView() {
   liveDetectionIndicator.hidden = false;
 
   snapshotButton.hidden = false;
-  resetButton.hidden = true;
-
   liveDetectionButton.hidden = false;
   updateRuntimeText();
 }
@@ -321,11 +328,20 @@ function stopLiveDetection() {
 * snapshotButton:
 * - stop live detection if necessary
 * - take snapshot
-* - switch to snapshot view
-* - run detector
-* - draw bounding box
+* - if already viewing a snapshot, return to live camera view
+* - run detector for the current captured frame
 */
 snapshotButton.addEventListener("click", async () => {
+  if (canvas.hidden === false) {
+    if (liveDetection) {
+      stopLiveDetection();
+    }
+    showLiveView();
+    statusElement.textContent = STRINGS[currentLanguage].statusReady;
+    detectionPlaceholder.textContent = STRINGS[currentLanguage].detectionPlaceholder;
+    updateRuntimeText();
+    return;
+  }
 
   if (liveDetection) {
     stopLiveDetection();
@@ -335,10 +351,8 @@ snapshotButton.addEventListener("click", async () => {
   detectionRequestId++;
   showSnapshotView();
   statusElement.textContent = STRINGS[currentLanguage].statusReady;
+  updateRuntimeText();
 
-  // requestAnimationFrame runs before painting. Yield to a later task so the
-  // browser can paint the captured frame before detection blocks the main
-  // thread with image preparation and inference.
   await new Promise((resolve) => {
     requestAnimationFrame(() => setTimeout(resolve, 0));
   });
@@ -363,24 +377,6 @@ liveDetectionButton.addEventListener("click", () => {
   } else {
     startLiveDetection();
   }
-});
-
-
-/*
-* resetButton:
-* - return to live camera view
-*/
-resetButton.addEventListener("click", () => {
-
-  if (liveDetection) {
-    stopLiveDetection();
-  }
-
-  showLiveView();
-
-  statusElement.textContent = STRINGS[currentLanguage].statusReady;
-  detectionPlaceholder.textContent =
-    STRINGS[currentLanguage].detectionPlaceholder;
 });
 
 
