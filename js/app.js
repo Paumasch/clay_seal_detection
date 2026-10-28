@@ -27,6 +27,12 @@
 translatePage(); // from strings.js, applies localisation
 
 const appTitle = document.getElementById("appTitle");
+// added by Paula (Mistral ;) )
+languageSelection.addEventListener("click", function () {
+  const menu = document.getElementById("langMenu");
+  menu.hidden = !menu.hidden;
+  languageSelection.setAttribute("aria-expanded", String(!menu.hidden));
+});
 const statusElement = document.getElementById("statusMsg");
 const snapshotButton = document.getElementById("snapshotButton");
 const liveDetectionButton = document.getElementById("liveDetectionButton");
