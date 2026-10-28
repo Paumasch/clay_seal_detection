@@ -6,3 +6,4 @@ TO DO LIST FOR WEBSITE
 -[] make buttons (Paula)
 -[x] make the logo seal wink on hover!!
 -[?] merge snapshot and reset buttons into one
+-[] add time logging
