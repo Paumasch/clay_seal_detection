@@ -273,7 +273,7 @@ const yoloDetector = {
 
     const tempCanvas = this.tempCanvas;
 
-    const ctx = tempCanvas.getContext("2d");
+    const ctx = tempCanvas.getContext("2d", { willReadFrequently: true });
 
     // bad mistral (also bring back the cat)
     // ctx.drawImage(capturedCanvas, 0, 0, 640, 640);

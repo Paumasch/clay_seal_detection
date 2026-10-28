@@ -47,6 +47,7 @@ const Welcomeparagraph = document.getElementById("Welcomeparagraph");
 // detector moved to its own file detectors.js
 
 let liveDetection = false;
+let detectionRequestId = 0;
 const liveDetectionInterval = CONFIG.LIVEDETECTION_INTERVAL_MS;
 liveDetectionIndicator.setAttribute("aria-label", STRINGS[currentLanguage].liveDetectionRunning);
 
@@ -140,11 +141,10 @@ function drawDetection(detections) {
     `${det.class} (${Math.round(det.confidence * 100)}%)`;
 }
 
-
 /**
-* capture and analyse one frame
-*/
-async function detectCurrentFrame() {
+ * take snapshot of current frame 
+ */
+function captureFrame() {
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
 
@@ -171,6 +171,13 @@ async function detectCurrentFrame() {
       : "portrait"
   });
 
+  return canvas;
+}
+
+/**
+* capture and analyse one frame
+*/
+async function detectCurrentFrame(canvas, requestId = detectionRequestId) {
   // runs snapshot through detector
   const result = await detector.detect(canvas);
 
@@ -178,7 +185,9 @@ async function detectCurrentFrame() {
   console.log("[currentFrame] Frame processed:", {detections: result.detections.length});
 
   // draws bounding box(es) / updates overlay
-  drawDetection(result.detections);
+  if (requestId === detectionRequestId) {
+    drawDetection(result.detections);
+  }
 
   return result;
 }
@@ -200,13 +209,17 @@ async function runLiveDetection() {
   console.log("[live] Detection loop started.");
 
   while (liveDetection) {
+    const requestId = detectionRequestId;
+
     try {
-      const result = await detectCurrentFrame();
+      await detectCurrentFrame(captureFrame(), requestId);
     } catch (error) {
       console.error("[live] Detection failed:", error);
-      statusElement.textContent = "Detection failed. Check the console.";
-      liveDetection = false;
-      showLiveView();
+      if (liveDetection && requestId === detectionRequestId) {
+        statusElement.textContent = "Detection failed. Check the console.";
+        liveDetection = false;
+        showLiveView();
+      }
       break;
     }
     await new Promise((resolve) => setTimeout(resolve, liveDetectionInterval));
@@ -220,6 +233,7 @@ async function runLiveDetection() {
 
 function startLiveDetection() {
   liveDetection = true;
+  detectionRequestId++;
 
   showLiveDetectionView();
   statusElement.textContent = STRINGS[currentLanguage].statusReady;
@@ -231,6 +245,7 @@ function startLiveDetection() {
 
 function stopLiveDetection() {
   liveDetection = false;
+  detectionRequestId++;
 
   // cleanup
   detectionPlaceholder.textContent = "";
@@ -256,11 +271,25 @@ snapshotButton.addEventListener("click", async () => {
   if (liveDetection) {
     stopLiveDetection();
   }
+
+  const capturedFrame = captureFrame();
+  detectionRequestId++;
   showSnapshotView();
-
-  detectCurrentFrame();
-
   statusElement.textContent = STRINGS[currentLanguage].statusReady;
+
+  // requestAnimationFrame runs before painting. Yield to a later task so the
+  // browser can paint the captured frame before detection blocks the main
+  // thread with image preparation and inference.
+  await new Promise((resolve) => {
+    requestAnimationFrame(() => setTimeout(resolve, 0));
+  });
+
+  try {
+    await detectCurrentFrame(capturedFrame, detectionRequestId);
+  } catch (error) {
+    console.error("[snapshot] Detection failed:", error);
+    statusElement.textContent = "Detection failed. Check the console.";
+  }
 });
 
 
