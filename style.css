@@ -330,6 +330,22 @@ button,
   box-shadow: 0 0 0.35rem #e00000;
   animation: live-detection-pulse 1.5s ease-in-out infinite;
 }
+
+.model-status-overlay {
+  position: absolute;
+  left: 50%;
+  bottom: 0.75rem;
+  transform: translateX(-50%);
+  max-width: calc(100% - 1.5rem);
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.72);
+  color: #fff;
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 1.25;
+  pointer-events: none;
+}
 @keyframes live-detection-pulse {
   0%,
   100% { opacity: 1; }

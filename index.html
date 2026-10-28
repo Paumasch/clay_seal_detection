@@ -32,26 +32,26 @@
           height="50">
       </a>
 
-      <a class="Page_Title" aria-label="Page Title" data-i18n="Page_Title"> 
-        <h1 data-i18n="Page_Title">You are getting warmer!</h1>
-      </a>
+      <h1 class="Page_Title" data-i18n="pageTitle">You are getting warmer!</h1>
 
-      <!--Language Selection Dropdown-->
-      <!-- The language icons need to be connected to the language in the textelements part to work-->
       <div class="language_selection_dropdown">
-        <button id="languageSelection" class="lang-btn" aria-haspopup="listbox" aria-expanded="false">
+        <button id="languageSelection" class="lang-btn" aria-haspopup="listbox" aria-expanded="false"
+          aria-label="Choose a language">
           <img id="currentFlag" src="assets/flagpack--gl.svg" alt="" width="20" height="15">
-          <span></span> ▾
+          <span id="currentLanguageLabel">English</span> ▾
         </button>
         <ul id="langMenu" hidden role="listbox">
-          <li data-lang="Kalaallisut" data-flag="assets/flagpack--gl.svg" tabindex="0">
+          <li data-language="kl" role="option" tabindex="0">
             <img src="assets/flagpack--gl.svg" alt="" width="20" height="15">
+            <span>Kalaallisut</span>
           </li>
-          <li data-lang="Danish" data-flag="assets/flagpack--dk.svg" tabindex="0">
+          <li data-language="da" role="option" tabindex="0">
             <img src="assets/flagpack--dk.svg" alt="" width="20" height="15">
+            <span>Dansk</span>
           </li>
-          <li data-lang="English" data-flag="assets/flagpack--gb.svg" tabindex="0">
+          <li data-language="en" role="option" tabindex="0">
             <img src="assets/flagpack--gb-ukm.svg" alt="" width="20" height="15">
+            <span>English</span>
           </li>
         </ul>
       </div>
@@ -59,11 +59,11 @@
     </nav>
 
     <h3> 
-        <p id = "Welcomeparagraph" class = "welcome-paragraph" data-i18n="Welcomeparagraph">            
+        <p id="Welcomeparagraph" class="welcome-paragraph" data-i18n="welcomeParagraph">
         </p>
     </h3>
     
-    <a class="button" href="app.html" data-i18n="startButton" 
+    <a class="button" href="app.html" data-i18n="startButton"
         style="  display: block; margin-left: auto; margin-right: auto; width: 40%; text-align:center;">
       Start
     </a>

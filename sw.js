@@ -34,7 +34,6 @@ const CACHED_URLS = [
   "./js/detectors.js",
   "./js/register-sw.js",
   "./js/textelements.js",
-  "./js/welcome.js",
 
   "./assets/favicon.ico",
   "./assets/favicon-32x32.png",

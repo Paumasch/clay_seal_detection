@@ -26,30 +26,84 @@
 
 translatePage(); // from strings.js, applies localisation
 
-const appTitle = document.getElementById("appTitle");
-// added by Paula (Mistral ;) )
-languageSelection.addEventListener("click", function () {
-  const menu = document.getElementById("langMenu");
-  menu.hidden = !menu.hidden;
-  languageSelection.setAttribute("aria-expanded", String(!menu.hidden));
-});
 const statusElement = document.getElementById("statusMsg");
 const snapshotButton = document.getElementById("snapshotButton");
 const liveDetectionButton = document.getElementById("liveDetectionButton");
 const liveDetectionIndicator = document.getElementById("liveDetectionIndicator");
 const resetButton = document.getElementById("resetButton");
 const detectionPlaceholder = document.getElementById("detectionPlaceholder");
+const modelStatus = document.getElementById("modelStatus");
 const video = document.getElementById("cameraVideo");
 const canvas = document.getElementById("snapshotCanvas");
 const detectionBox = document.getElementById("detectionBox");
-const Welcomeparagraph = document.getElementById("Welcomeparagraph");
 
 // detector moved to its own file detectors.js
 
 let liveDetection = false;
 let detectionRequestId = 0;
+let modelStatusTimeoutId = null;
 const liveDetectionInterval = CONFIG.LIVEDETECTION_INTERVAL_MS;
 liveDetectionIndicator.setAttribute("aria-label", STRINGS[currentLanguage].liveDetectionRunning);
+
+function showModelStatus(message, autoHide = false) {
+  if (!modelStatus) {
+    return;
+  }
+
+  if (modelStatusTimeoutId) {
+    clearTimeout(modelStatusTimeoutId);
+    modelStatusTimeoutId = null;
+  }
+
+  modelStatus.textContent = message;
+  modelStatus.hidden = false;
+
+  if (autoHide) {
+    modelStatusTimeoutId = window.setTimeout(() => {
+      modelStatus.hidden = true;
+    }, 1000);
+  }
+}
+
+function hideModelStatus() {
+  if (modelStatus) {
+    modelStatus.hidden = true;
+  }
+  if (modelStatusTimeoutId) {
+    clearTimeout(modelStatusTimeoutId);
+    modelStatusTimeoutId = null;
+  }
+}
+
+async function initializeModelStatus() {
+  if (typeof detector.init !== "function") {
+    hideModelStatus();
+    return;
+  }
+
+  showModelStatus(getText("modelLoading"));
+
+  try {
+    await detector.init();
+    showModelStatus(getText("modelLoaded"), true);
+  } catch (error) {
+    const errorMessage = error && error.message ? error.message : String(error);
+    showModelStatus(`${getText("modelErrorPrefix")}${errorMessage}`, false);
+  }
+}
+
+function updateRuntimeText() {
+  const liveDetectionLabel = liveDetection
+    ? getText("stopLiveDetection")
+    : getText("startLiveDetection");
+  liveDetectionButton.setAttribute("aria-label", liveDetectionLabel);
+  liveDetectionIndicator.setAttribute("aria-label", getText("liveDetectionRunning"));
+  liveDetectionButton.querySelector("img").alt = liveDetectionLabel;
+  snapshotButton.querySelector("img").alt = getText("snapshotButton");
+  resetButton.setAttribute("aria-label", getText("resetButton"));
+}
+
+document.addEventListener("languagechange", updateRuntimeText);
 
 
 //MARK: camera
@@ -67,7 +121,7 @@ async function startCamera() {
     video.srcObject = stream;
   } catch (error) {
     console.error("Camera access failed:", error);
-    statusElement.textContent = STRINGS[currentLanguage].cameraAccessFailed; 
+    statusElement.textContent = getText("cameraAccessFailed");
   }
 }
 
@@ -84,7 +138,7 @@ function showLiveView() {
   resetButton.hidden = true;
 
   liveDetectionButton.hidden = false;
-  //liveDetectionButton.textContent = "Start live detection";
+  updateRuntimeText();
 }
 
 function showSnapshotView() {
@@ -96,7 +150,7 @@ function showSnapshotView() {
   resetButton.hidden = false;
 
   liveDetectionButton.hidden = false;
-  //liveDetectionButton.textContent = "Start live detection";
+  updateRuntimeText();
 }
 
 function showLiveDetectionView() {
@@ -108,7 +162,7 @@ function showLiveDetectionView() {
   resetButton.hidden = true;
 
   liveDetectionButton.hidden = false;
-  //liveDetectionButton.textContent = "Stop live detection";
+  updateRuntimeText();
 }
 
 
@@ -120,12 +174,13 @@ function showLiveDetectionView() {
 function drawDetection(detections) {
   if (detections.length === 0) {
     detectionBox.hidden = true;
-    detectionPlaceholder.textContent = "Nothing detected.";
+    detectionPlaceholder.textContent = getText("nothingDetected");
 
     return;
   }
 
   const det = detections[0]; // for now only display the first detection
+  const label = translateModelLabel(det.class);
 
   detectionBox.style.left = `${det.x * 100}%`;
   detectionBox.style.top = `${det.y * 100}%`;
@@ -134,11 +189,11 @@ function drawDetection(detections) {
   detectionBox.hidden = false;
 
   detectionBox.textContent =
-  `${det.class} ${(det.confidence).toFixed(2)}`;
+  `${label} ${(det.confidence).toFixed(2)}`;
 
   // can get removed
   detectionPlaceholder.textContent =
-    `${det.class} (${Math.round(det.confidence * 100)}%)`;
+    `${label} (${Math.round(det.confidence * 100)}%)`;
 }
 
 /**
@@ -216,7 +271,7 @@ async function runLiveDetection() {
     } catch (error) {
       console.error("[live] Detection failed:", error);
       if (liveDetection && requestId === detectionRequestId) {
-        statusElement.textContent = "Detection failed. Check the console.";
+        statusElement.textContent = getText("detectionFailed");
         liveDetection = false;
         showLiveView();
       }
@@ -288,7 +343,7 @@ snapshotButton.addEventListener("click", async () => {
     await detectCurrentFrame(capturedFrame, detectionRequestId);
   } catch (error) {
     console.error("[snapshot] Detection failed:", error);
-    statusElement.textContent = "Detection failed. Check the console.";
+    statusElement.textContent = getText("detectionFailed");
   }
 });
 
@@ -328,4 +383,6 @@ resetButton.addEventListener("click", () => {
 //MARK: execute functions
 
 showLiveView();
+updateRuntimeText();
+initializeModelStatus();
 startCamera();
