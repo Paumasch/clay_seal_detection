@@ -1,23 +1,41 @@
 TO DO LIST FOR WEBSITE
 
 -[x] add flags to drop down language selector
--[] add links to flags for lincense reasons
--[] add text files in different langauges (for Paula)
--[] add start, stop and snapshot button to app.html
+-[ ] add links to flags for lincense reasons
+-[ ] add text files in different langauges (for Paula)
+-[ ] add start, stop and snapshot button to app.html
 -[x] make buttons (Paula)
 -[x] make the logo seal wink on hover!!
 -[?] merge snapshot and reset buttons into one
--[] change outline of app html
--[] add fjord photo as background photo to index html
+-[ ] change outline of app html
+-[ ] add fjord photo as background photo to index html
 
-- [] JUST GET IT DONE!
+
+//MARK: Karl 
+- [ ] JUST GET IT DONE!
     ! ignore offline, service worker nonsense
-    - [] language 
+    - [x] language 
         ! ignore accessibility for now
-        - [] update active flag
-        - [] attach translate function to buttons 
-        - [] fix missing/messed up labels and translations
-        - [] hide dropdown when clicking somewhere else
-    - [] controls 
-        - [] fix mistral's funny business
-        - [] 
+        - [x] update active flag
+        - [x] attach translate function to buttons 
+        - [x] fix missing/messed up labels and translations
+        - [x] hide dropdown when clicking somewhere else
+    - [ ] controls 
+        - [ ] fix mistral's funny business
+        - [ ] 
+    - [ ] fix detection
+        - [ ] enable more than one 
+        - [?] automatically adjust "gain"/"sensitivity"
+    - [?] improve clarity of UI
+        - [ ] reset button immediately starts live detection
+        - [?] add feedback via status-overlay?
+
+
+- [ ] make it slightly less crap
+    - [ ] make it pretty
+        - [ ] remove outlines
+        - [ ] better buttons
+        - [ ] add backgrounds to navbar / body / etc. 
+        - [ ] improve nav bar
+    - [ ] make it faster
+    - [ ] 

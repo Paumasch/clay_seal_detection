@@ -16,6 +16,7 @@ vh, vw .. relative to viewport's height/width ("viewport" = window in browser, n
   display: none !important;
 }
 
+/*MARK: debug*/
 /* temporary layout debugging */
 .debug-layout main,
 .debug-layout footer,
