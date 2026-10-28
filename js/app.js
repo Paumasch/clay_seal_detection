@@ -192,6 +192,8 @@ function showLiveDetectionView() {
 * draws output
 */
 function drawDetection(detections) {
+  detectionBox.replaceChildren();
+
   if (detections.length === 0) {
     detectionBox.hidden = true;
     detectionPlaceholder.textContent = getText("nothingDetected");
@@ -199,23 +201,28 @@ function drawDetection(detections) {
     return;
   }
 
-  const det = detections[0]; // for now only display the first detection
-  const label = translateModelLabel(det.class);
+  const detectionSummaries = [];
 
-  detectionBox.style.left = `${det.x * 100}%`;
-  detectionBox.style.top = `${det.y * 100}%`;
-  detectionBox.style.width = `${det.width * 100}%`;
-  detectionBox.style.height = `${det.height * 100}%`;
+  for (const det of detections) {
+    const label = translateModelLabel(det.class);
+    const detectionBoxElement = document.createElement("div");
+    detectionBoxElement.className = "detection-box";
+    detectionBoxElement.style.left = `${det.x * 100}%`;
+    detectionBoxElement.style.top = `${det.y * 100}%`;
+    detectionBoxElement.style.width = `${det.width * 100}%`;
+    detectionBoxElement.style.height = `${det.height * 100}%`;
+
+    const detectionLabel = document.createElement("span");
+    detectionLabel.className = "detection-box-label";
+    detectionLabel.textContent = `${label} ${(det.confidence).toFixed(2)}`;
+    detectionBoxElement.append(detectionLabel);
+    detectionBox.append(detectionBoxElement);
+
+    detectionSummaries.push(`${label} (${Math.round(det.confidence * 100)}%)`);
+  }
+
   detectionBox.hidden = false;
-
-  const detectionLabel = document.createElement("span");
-  detectionLabel.className = "detection-box-label";
-  detectionLabel.textContent = `${label} ${(det.confidence).toFixed(2)}`;
-  detectionBox.replaceChildren(detectionLabel);
-
-  // can get removed
-  detectionPlaceholder.textContent =
-    `${label} (${Math.round(det.confidence * 100)}%)`;
+  detectionPlaceholder.textContent = detectionSummaries.join(", ");
 }
 
 /**
