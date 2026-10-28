@@ -1,7 +1,8 @@
 TO DO LIST FOR WEBSITE
 
 -[x] add flags to drop down language selector
--[]adjust dropdown so that when clicking on flag, that flag is shown
+-[] adjust dropdown so that when clicking on flag, that flag is shown
+-[] add links to flags for lincense reasons
 -[] add text files in different langauges (for Paula)
 -[] add start, stop and snapshot button to app.html
 -[x] make buttons (Paula)
