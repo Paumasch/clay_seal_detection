@@ -8,5 +8,4 @@ TO DO LIST FOR WEBSITE
 -[x] make buttons (Paula)
 -[x] make the logo seal wink on hover!!
 -[?] merge snapshot and reset buttons into one
--[] change outline of app html
--[] add fjord photo as background photo to index html
+-[] add time logging
