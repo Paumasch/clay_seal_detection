@@ -74,30 +74,23 @@
     </section>
 
     <section aria-labelledby="cameraControls" class="camera-controls" aria-label="Camera controls">
-      <a class="control-button" href="/" aria-label="Back to home">
+      <a class="controlbutton" href="/" aria-label="Back to home">
         <span class="control-icon" aria-hidden="true">←</span>
         <span class="control-label" data-i18n="backButton">Back</span>
       </a>
 
-      <button id="liveDetectionButton" class="control-button" type="button">
-        <span class="control-icon" aria-hidden="true">●</span>
-        <span id="liveDetectionLabel" class="control-label" data-i18n="startLiveDetection">
-          Start live detection
-        </span>
+      <button id="liveDetectionButton" class="controlbutton" type="button">
+        <img src="assets/play.png" alt="Start live detection" width="20" height="20">
       </button>
 
-      <button id="snapshotButton" class="control-button" type="button">
-        <span class="control-icon" aria-hidden="true">▣</span>
-        <span class="control-label" data-i18n="snapshotButton">
-          Take snapshot
-        </span>
+      <button id="snapshotButton" class="controlbutton" type="button">
+        <img src="assets/snapshot.png" alt="Take snapshot" width="20" height="20">
       </button>
 
       <!-- merge with snapshotButton? -->
-      <button id="resetButton" class="control-button" type="button" hidden>
+      <button id="resetButton" class="controlbutton" type="button">
         <span class="control-icon" aria-hidden="true">↺</span>
         <span class="control-label" data-i18n="resetButton">
-          Reset
         </span>
       </button>
     </section>

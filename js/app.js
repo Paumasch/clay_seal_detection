@@ -83,7 +83,7 @@ function showLiveView() {
   resetButton.hidden = true;
 
   liveDetectionButton.hidden = false;
-  liveDetectionButton.textContent = "Start live detection";
+  //liveDetectionButton.textContent = "Start live detection";
 }
 
 function showSnapshotView() {
@@ -95,7 +95,7 @@ function showSnapshotView() {
   resetButton.hidden = false;
 
   liveDetectionButton.hidden = false;
-  liveDetectionButton.textContent = "Start live detection";
+  //liveDetectionButton.textContent = "Start live detection";
 }
 
 function showLiveDetectionView() {
@@ -107,7 +107,7 @@ function showLiveDetectionView() {
   resetButton.hidden = true;
 
   liveDetectionButton.hidden = false;
-  liveDetectionButton.textContent = "Stop live detection";
+  //liveDetectionButton.textContent = "Stop live detection";
 }
 
 
