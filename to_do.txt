@@ -1,7 +1,6 @@
 TO DO LIST FOR WEBSITE
 
 -[x] add flags to drop down language selector
--[] adjust dropdown so that when clicking on flag, that flag is shown
 -[] add links to flags for lincense reasons
 -[] add text files in different langauges (for Paula)
 -[] add start, stop and snapshot button to app.html
@@ -10,3 +9,15 @@ TO DO LIST FOR WEBSITE
 -[?] merge snapshot and reset buttons into one
 -[] change outline of app html
 -[] add fjord photo as background photo to index html
+
+- [] JUST GET IT DONE!
+    ! ignore offline, service worker nonsense
+    - [] language 
+        ! ignore accessibility for now
+        - [] update active flag
+        - [] attach translate function to buttons 
+        - [] fix missing/messed up labels and translations
+        - [] hide dropdown when clicking somewhere else
+    - [] controls 
+        - [] fix mistral's funny business
+        - [] 
