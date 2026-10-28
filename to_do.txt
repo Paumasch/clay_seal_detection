@@ -1,8 +1,11 @@
 TO DO LIST FOR WEBSITE
 
 -[x] add flags to drop down language selector
+-[]adjust dropdown so that when clicking on flag, that flag is shown
 -[] add text files in different langauges (for Paula)
--[] add start and stop button to app.html
+-[] add start, stop and snapshot button to app.html
 -[x] make buttons (Paula)
 -[x] make the logo seal wink on hover!!
 -[?] merge snapshot and reset buttons into one
+-[] change outline of app html
+-[] add fjord photo as background photo to index html
