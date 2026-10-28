@@ -159,11 +159,30 @@ h2 {
   font-size: medium;
 }
 
-.language_selection_dropdown { position: relative; display: inline-block; }
-.lang-btn { display: flex; align-items: center; gap: 8px; padding: 6px 12px; cursor: pointer; }
+.language_selection_dropdown {
+  position: relative;
+  display: inline-block;
+  z-index: 10;
+}
+.lang-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
 #langMenu {
-  position: absolute; top: 100%; left: 0; margin: 4px 0 0; padding: 0;
-  list-style: none; background: #fff; border: 1px solid #ccc; min-width: 150px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 20;
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+  background: #fff;
+  border: 1px solid #ccc;
+  min-width: 150px;
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.15);
 }
 #langMenu li { display: flex; align-items: center; gap: 8px; padding: 6px 12px; cursor: pointer; }
 #langMenu li:hover { background: #eee; }
@@ -231,12 +250,15 @@ button,
 }
 
 .top-nav {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   min-height: 3rem;
   margin-bottom: 1rem;
+  overflow: visible;
 }
 
 .home-link {
