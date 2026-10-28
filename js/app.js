@@ -38,6 +38,11 @@ const modelStatus = document.getElementById("modelStatus");
 const video = document.getElementById("cameraVideo");
 const canvas = document.getElementById("snapshotCanvas");
 const detectionBox = document.getElementById("detectionBox");
+const viewport = document.getElementById("viewport");
+
+video.addEventListener("loadedmetadata", () => {
+  updateDetectionOverlayBounds(video.videoWidth, video.videoHeight);
+});
 
 // detector moved to its own file detectors.js
 
@@ -137,14 +142,14 @@ async function startCamera() {
     const stream = await navigator.mediaDevices.getUserMedia({
       video: {
         facingMode: { ideal: "environment" },
-        // width: { ideal: 720 },
-        // height: { ideal: 960 },
+        width: { ideal: 720 },
+        height: { ideal: 960 },
         aspectRatio: { ideal: 3 / 4 }
       }
     });
 
     video.srcObject = stream;
-    video.style.objectFit = "cover";
+    updateDetectionOverlayBounds(video.videoWidth, video.videoHeight);
   } catch (error) {
     console.error("Camera access failed:", error);
     statusElement.textContent = getText("cameraAccessFailed");
@@ -154,9 +159,35 @@ async function startCamera() {
 
 //MARK: viewport states
 
+function updateDetectionOverlayBounds(mediaWidth, mediaHeight) {
+  if (!mediaWidth || !mediaHeight || !viewport) {
+    return;
+  }
+
+  const viewportAspectRatio = viewport.clientWidth / viewport.clientHeight;
+  const mediaAspectRatio = mediaWidth / mediaHeight;
+
+  if (mediaAspectRatio > viewportAspectRatio) {
+    const displayedHeight = viewport.clientWidth / mediaAspectRatio;
+    const verticalOffset = (viewport.clientHeight - displayedHeight) / 2;
+    detectionBox.style.left = "0";
+    detectionBox.style.right = "0";
+    detectionBox.style.top = `${verticalOffset}px`;
+    detectionBox.style.bottom = `${verticalOffset}px`;
+  } else {
+    const displayedWidth = viewport.clientHeight * mediaAspectRatio;
+    const horizontalOffset = (viewport.clientWidth - displayedWidth) / 2;
+    detectionBox.style.left = `${horizontalOffset}px`;
+    detectionBox.style.right = `${horizontalOffset}px`;
+    detectionBox.style.top = "0";
+    detectionBox.style.bottom = "0";
+  }
+}
+
 function showLiveView() {
   video.hidden = false;
   canvas.hidden = true;
+  updateDetectionOverlayBounds(video.videoWidth, video.videoHeight);
   detectionBox.hidden = true;
   liveDetectionIndicator.hidden = true;
 
@@ -168,6 +199,7 @@ function showLiveView() {
 function showSnapshotView() {
   video.hidden = true;
   canvas.hidden = false;
+  updateDetectionOverlayBounds(canvas.width, canvas.height);
   liveDetectionIndicator.hidden = true;
 
   snapshotButton.hidden = false;
@@ -243,6 +275,7 @@ function captureFrame() {
     canvas.width,
     canvas.height
   );
+  updateDetectionOverlayBounds(canvas.width, canvas.height);
 
   // crude debugging
   console.debug("[capture]", {
