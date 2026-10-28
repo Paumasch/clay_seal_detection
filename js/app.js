@@ -110,15 +110,19 @@ document.addEventListener("languagechange", updateRuntimeText);
 
 async function startCamera() {
   try {
-    // politely request 480x640 resolution from camera
+    // request a portrait-oriented capture
+    // can't guarantee it, but still
     const stream = await navigator.mediaDevices.getUserMedia({
       video: {
         facingMode: { ideal: "environment" },
-        width: { ideal: 480 },
-        height: { ideal: 640 }
+        width: { ideal: 720 },
+        height: { ideal: 960 },
+        aspectRatio: { ideal: 3 / 4 }
       }
     });
+
     video.srcObject = stream;
+    video.style.objectFit = "cover";
   } catch (error) {
     console.error("Camera access failed:", error);
     statusElement.textContent = getText("cameraAccessFailed");

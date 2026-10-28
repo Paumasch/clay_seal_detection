@@ -59,11 +59,11 @@
       
     </nav>
 
-    <h3> 
+    <!-- <h3> 
         <p id="Explainparagraph" class="explain-paragraph" data-i18n="explainParagraph">
           Press the start camera button when you are read to begin the detection. The camera will open and you can point it at the object you want to detect. The model will then try to detect the object and display the result on the screen.          
         </p>
-    </h3>
+    </h3> -->
 
     <!--MARK: camera-->
     <section aria-labelledby="viewport" id="viewport" class="viewport">
@@ -75,7 +75,8 @@
     </section>
 
     <section aria-labelledby="cameraControls" class="camera-controls" aria-label="Camera controls">
-      <a class="controlbutton" href="/" aria-label="Back to home">
+
+      <a class="controlbutton" href="./" aria-label="Back to home">
         <span class="control-icon" aria-hidden="true">←</span>
         <span class="control-label" data-i18n="backButton">Back</span>
       </a>
@@ -112,7 +113,16 @@
       </div>
     </details>
 
+
+    <h3> 
+      <p id="Explainparagraph" class="explain-paragraph" data-i18n="explainParagraph">
+        Press the start camera button when you are read to begin the detection. The camera will open and you can point it at the object you want to detect. The model will then try to detect the object and display the result on the screen.          
+      </p>
+    </h3>
+
   </main>
+
+  
 
   <!--MARK: scripts
   notes:  - config.js and register-sw.js need to be loaded early (therefore sitting in head)

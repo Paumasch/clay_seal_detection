@@ -22,8 +22,9 @@ TO DO LIST FOR WEBSITE
         - [x] hide dropdown when clicking somewhere else
     - [ ] controls 
         - [ ] fix mistral's funny business
-        - [ ] 
-    - [ ] fix detection
+        - [ ] add button to back
+    - [ ] FIX DETECTION
+        - [ ] FIX STRETCH + NMS
         - [ ] enable more than one 
         - [?] automatically adjust "gain"/"sensitivity"
     - [?] improve clarity of UI
@@ -37,5 +38,6 @@ TO DO LIST FOR WEBSITE
         - [ ] better buttons
         - [ ] add backgrounds to navbar / body / etc. 
         - [ ] improve nav bar
+        - [ ] move explanation to bottom?
     - [ ] make it faster
     - [ ] 
