@@ -1,6 +1,13 @@
 translatePage();
 
-const btn = document.getElementById('languageSelection');
+// added by Paula (Mistral ;) )
+languageSelection.addEventListener("click", function () {
+  const menu = document.getElementById("langMenu");
+  menu.hidden = !menu.hidden;
+  languageSelection.setAttribute("aria-expanded", String(!menu.hidden));
+});
+
+
 const menu = document.getElementById('langMenu');
 
 btn.addEventListener('click', () => {

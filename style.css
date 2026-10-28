@@ -186,12 +186,13 @@ h2 {
 
 
 button,
-.button {
+.lang-btn {
   display: inline-block;
   margin: 0.5rem 0;
   padding: 0.6rem 1rem;
   font: inherit;
 }
+
 
 .guide-image {
   display: block;

@@ -9,9 +9,9 @@
 const STRINGS = {
   en: {
     welcomeTitle: "Seal Counter",
+    Page_Title: "You are getting warmer!",
     languageSelection: "Choose a language:",
     startButton: "Start",
-    //appTitle: "Looking for seals?",
     backButton: "Back",
     cameraHeading: "Camera",
     cameraPlaceholder: "Camera preview will appear here.",
@@ -24,14 +24,13 @@ const STRINGS = {
     detectionPlaceholder: "Detection result will appear here.",
     resetButton: "Reset",
     languagePlaceholder: "The translators don't appreciate being rushed.",
-    Welcomeparagraph: "This webpage was developed as a simple demonstration of an object detection model. The model type is called YOLOv8n. The Aria-funded DronePort Project is using a similar model todetect and count the Kangia Ringed Seal Population in the Ilulissat Icefjord."
+    Welcomeparagraph: "This webpage was developed as a simple demonstration of an object detection model. The model used to train the object detector is called YOLOv8n developed by Ultralytics. The Aria-funded DronePort Project is using a similar model to detect and count the Kangia Ringed Seal population in the Ilulissat Icefjord. How does this website work? When you click the Start button you will reach the actual detection page."
   },
 
   da: {
     welcomeTitle: "Sæl Tæller",
     languageSelection: "Vælg et sprog:",
     startButton: "Starte",
-    //appTitle: "Looking for seals?",
     backButton: "Tilbage",
     cameraHeading: "Kamera",
     cameraPlaceholder: "Kameraforhåndsvisning vil vises her.",
@@ -50,11 +49,11 @@ const STRINGS = {
     welcomeTitle: "Seal Counter",
     languageButton: "Language",
     startButton: "Start",
-    appTitle: "Looking for seals?",
     backButton: "Back",
     cameraHeading: "Camera",
     cameraPlaceholder: "Camera preview will appear here.",
     cameraAccessFailed: "Camera access failed. Check permissions and reload.", // rename to errorCameraAccessFailed?
+    Explainparagraph: "Press the start camera button when you are read to begin the detection. The camera will open and you can point it at the object you want to detect. The model will then try to detect the object and display the result on the screen.",
     snapshotButton: "Take snapshot",
     liveDetectionRunning: "Live detection running",
     statusHeading: "Status",

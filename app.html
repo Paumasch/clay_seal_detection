@@ -33,6 +33,10 @@
           height="50">
       </a>
 
+      <a class="Page_Title" aria-label="Page Title" data-i18n="Page_Title"> 
+        <h1 data-i18n="Page_Title">You are getting warmer!</h1>
+      </a>
+
       <!--Language Selection Dropdown-->
       <!-- The language icons need to be connected to the language in the textelements part to work-->
       <div class="language_selection_dropdown">
@@ -40,7 +44,7 @@
           <img id="currentFlag" src="assets/flagpack--gl.svg" alt="" width="20" height="15">
           <span></span> ▾
         </button>
-        <ul id="langMenu" hidden>
+        <ul id="langMenu" hidden role="listbox">
           <li data-lang="Kalaallisut" data-flag="assets/flagpack--gl.svg" tabindex="0">
             <img src="assets/flagpack--gl.svg" alt="" width="20" height="15">
           </li>
@@ -55,6 +59,12 @@
       
     </nav>
 
+    <h3> 
+        <p id = "Explainparagraph" class = "explain-paragraph" data-i18n="Explainparagraph">
+          Press the start camera button when you are read to begin the detection. The camera will open and you can point it at the object you want to detect. The model will then try to detect the object and display the result on the screen.          
+        </p>
+    </h3>
+
     <!--MARK: camera-->
     <section aria-labelledby="viewport" id="viewport" class="viewport">
       <video id="cameraVideo" class="camera-feed" playsinline autoplay muted></video>
@@ -64,30 +74,23 @@
     </section>
 
     <section aria-labelledby="cameraControls" class="camera-controls" aria-label="Camera controls">
-      <a class="control-button" href="/" aria-label="Back to home">
+      <a class="controlbutton" href="/" aria-label="Back to home">
         <span class="control-icon" aria-hidden="true">←</span>
         <span class="control-label" data-i18n="backButton">Back</span>
       </a>
 
-      <button id="liveDetectionButton" class="control-button" type="button">
-        <span class="control-icon" aria-hidden="true">●</span>
-        <span id="liveDetectionLabel" class="control-label" data-i18n="startLiveDetection">
-          Start live detection
-        </span>
+      <button id="liveDetectionButton" class="controlbutton" type="button">
+        <img src="assets/play.png" alt="Start live detection" width="20" height="20">
       </button>
 
-      <button id="snapshotButton" class="control-button" type="button">
-        <span class="control-icon" aria-hidden="true">▣</span>
-        <span class="control-label" data-i18n="snapshotButton">
-          Take snapshot
-        </span>
+      <button id="snapshotButton" class="controlbutton" type="button">
+        <img src="assets/snapshot.png" alt="Take snapshot" width="20" height="20">
       </button>
 
       <!-- merge with snapshotButton? -->
-      <button id="resetButton" class="control-button" type="button" hidden>
+      <button id="resetButton" class="controlbutton" type="button">
         <span class="control-icon" aria-hidden="true">↺</span>
         <span class="control-label" data-i18n="resetButton">
-          Reset
         </span>
       </button>
     </section>

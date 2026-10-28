@@ -27,6 +27,12 @@
 translatePage(); // from strings.js, applies localisation
 
 const appTitle = document.getElementById("appTitle");
+// added by Paula (Mistral ;) )
+languageSelection.addEventListener("click", function () {
+  const menu = document.getElementById("langMenu");
+  menu.hidden = !menu.hidden;
+  languageSelection.setAttribute("aria-expanded", String(!menu.hidden));
+});
 const statusElement = document.getElementById("statusMsg");
 const snapshotButton = document.getElementById("snapshotButton");
 const liveDetectionButton = document.getElementById("liveDetectionButton");
@@ -77,7 +83,7 @@ function showLiveView() {
   resetButton.hidden = true;
 
   liveDetectionButton.hidden = false;
-  liveDetectionButton.textContent = "Start live detection";
+  //liveDetectionButton.textContent = "Start live detection";
 }
 
 function showSnapshotView() {
@@ -89,7 +95,7 @@ function showSnapshotView() {
   resetButton.hidden = false;
 
   liveDetectionButton.hidden = false;
-  liveDetectionButton.textContent = "Start live detection";
+  //liveDetectionButton.textContent = "Start live detection";
 }
 
 function showLiveDetectionView() {
@@ -101,7 +107,7 @@ function showLiveDetectionView() {
   resetButton.hidden = true;
 
   liveDetectionButton.hidden = false;
-  liveDetectionButton.textContent = "Stop live detection";
+  //liveDetectionButton.textContent = "Stop live detection";
 }
 
 
