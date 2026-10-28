@@ -29,7 +29,9 @@ translatePage(); // from strings.js, applies localisation
 const statusElement = document.getElementById("statusMsg");
 const snapshotButton = document.getElementById("snapshotButton");
 const snapshotLabel = document.getElementById("snapshotLabel");
+const snapshotIcon = document.getElementById("snapshotIcon");
 const liveDetectionButton = document.getElementById("liveDetectionButton");
+const backButton = document.querySelector(".back-button");
 const liveDetectionIndicator = document.getElementById("liveDetectionIndicator");
 const detectionPlaceholder = document.getElementById("detectionPlaceholder");
 const modelStatus = document.getElementById("modelStatus");
@@ -108,6 +110,13 @@ function updateRuntimeText() {
 
   if (snapshotLabel) {
     snapshotLabel.textContent = canvas.hidden ? "Snapshot" : "Reset";
+  }
+
+  if (snapshotIcon) {
+    snapshotIcon.src = canvas.hidden
+      ? "assets/icon-snapshot.svg"
+      : "assets/icon-reset.svg";
+    snapshotIcon.alt = canvas.hidden ? "Take snapshot" : "Reset";
   }
 
   snapshotButton.setAttribute(
@@ -199,8 +208,10 @@ function drawDetection(detections) {
   detectionBox.style.height = `${det.height * 100}%`;
   detectionBox.hidden = false;
 
-  detectionBox.textContent =
-  `${label} ${(det.confidence).toFixed(2)}`;
+  const detectionLabel = document.createElement("span");
+  detectionLabel.className = "detection-box-label";
+  detectionLabel.textContent = `${label} ${(det.confidence).toFixed(2)}`;
+  detectionBox.replaceChildren(detectionLabel);
 
   // can get removed
   detectionPlaceholder.textContent =
@@ -243,7 +254,11 @@ function captureFrame() {
 /**
 * capture and analyse one frame
 */
-async function detectCurrentFrame(canvas, requestId = detectionRequestId) {
+async function detectCurrentFrame(
+  canvas,
+  requestId = detectionRequestId,
+  showSnapshotEmptyStatus = false
+) {
   // runs snapshot through detector
   const result = await detector.detect(canvas);
 
@@ -253,6 +268,9 @@ async function detectCurrentFrame(canvas, requestId = detectionRequestId) {
   // draws bounding box(es) / updates overlay
   if (requestId === detectionRequestId) {
     drawDetection(result.detections);
+    if (showSnapshotEmptyStatus && result.detections.length === 0) {
+      showModelStatus("Nothing detected. Try again!");
+    }
   }
 
   return result;
@@ -332,6 +350,8 @@ function stopLiveDetection() {
 * - run detector for the current captured frame
 */
 snapshotButton.addEventListener("click", async () => {
+  hideModelStatus();
+
   if (canvas.hidden === false) {
     if (liveDetection) {
       stopLiveDetection();
@@ -358,7 +378,7 @@ snapshotButton.addEventListener("click", async () => {
   });
 
   try {
-    await detectCurrentFrame(capturedFrame, detectionRequestId);
+    await detectCurrentFrame(capturedFrame, detectionRequestId, true);
   } catch (error) {
     console.error("[snapshot] Detection failed:", error);
     statusElement.textContent = getText("detectionFailed");
@@ -372,11 +392,17 @@ snapshotButton.addEventListener("click", async () => {
 * - stop continuous detection when already running
 */
 liveDetectionButton.addEventListener("click", () => {
+  hideModelStatus();
+
   if (liveDetection) {
     stopLiveDetection();
   } else {
     startLiveDetection();
   }
+});
+
+backButton.addEventListener("click", () => {
+  hideModelStatus();
 });
 
 
