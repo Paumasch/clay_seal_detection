@@ -89,6 +89,9 @@ main {
   }
 }
 
+.welcome-paragraph, .explain-paragraph {
+  text-align: justify;
+}
 
 /*MARK: shenanigans
 ai-slop
