@@ -94,10 +94,6 @@
       </div>
     </section>
 
-    <!-- to be folded into details -->
-    <p id="Explainparagraph" class="explain-paragraph" data-i18n="explainParagraph">
-      Press the start camera button when you are read to begin the detection. The camera will open and you can point it at the object you want to detect. The model will then try to detect the object and display the result on the screen.          
-    </p>
 
     <!-- to be deleted -->
     <section aria-labelledby="statusHeading">
@@ -105,12 +101,27 @@
       <p id="statusMsg" role="status" data-i18n="statusReady">Ready.</p>
     </section>
 
-    <details class="detection-details">
-      <summary id="detectionHeading" data-i18n="detectionHeading">
-        Click here for additional information
+    <!-- to be folded into details? -->
+    <p id="Explainparagraph" class="explain-paragraph" data-i18n="explainParagraph">
+        Simply press the big button in the centre to start the model, then point the camera at a target and see what happens! If it detects a potential seal, a green square will appear around it (the little number next to it tells you how confident the model is that this really is a seal (the higher the more confident)). 
+    </p>
+
+    <details class="extra-details">
+      <summary id="detailsHeading" data-i18n="detailsHeading">
+        Click here for additional information / help
       </summary>
 
-      <div id="detectionPlaceholder" aria-live="polite">
+      <div id="detailsContent" aria-live="polite">
+        <p data-i18n="detailsIntro"></p>
+        <ul>
+          <li data-i18n="detailsBlackScreen"></li>
+          <li data-i18n="detailsSlowDetection"></li>
+          <li data-i18n="detailsNeedHelp"></li>
+        </ul>
+      </div>
+
+      <!-- to be deleted? -->
+      <div id="detectionPlaceholder" data-i18n="detectionPlaceholder" aria-live="polite" hidden>
         Detection result will appear here.
       </div>
     </details>

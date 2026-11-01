@@ -545,15 +545,25 @@ button {
 }
 
 #status,
-#detectionPlaceholder {
+#detectionPlaceholder,
+#detailsContent {
   min-height: 1.5em;
 }
 
-.detection-details {
+#detailsContent p {
+  margin: 0.25rem 0 0.5rem;
+}
+
+#detailsContent ul {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.extra-details {
   margin-top: 1rem;
 }
 
-.detection-details summary {
+.extra-details summary {
   cursor: pointer;
   font-size: medium;
   font-weight: bold;
