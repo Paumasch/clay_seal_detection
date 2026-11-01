@@ -57,6 +57,27 @@ body {
   color: #1c1c1c;
 }
 
+.index-page {
+  /* background-color: rgba(180, 180, 180, 0.35); */
+  background-image: url("./assets/ilulissat_fjord.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+ #startButton {
+  display: block; 
+  font-size: large;
+  font-weight: bold;
+  /* margin-left: auto; 
+  margin-right: auto;  */
+  margin-inline: auto;
+  width: fit-content; 
+  text-align:center;
+  margin: -1.5rem auto 0;
+}
+
 main, footer {
   width: min(
     calc(100% - (2 * var(--page-padding))),
@@ -67,13 +88,22 @@ main, footer {
 
 main {
   /* margin-top: var(--page-padding); */
-  padding: 0.3rem 1rem 0.5rem;
+  padding: 0.3rem 1rem 1rem;
   border-radius: 1.5rem;
   background: #ffffff;
   box-shadow: 0 0.75rem 1.5rem rgba(15, 23, 42, 0.08);
   border: 1px solid rgba(15, 23, 42, 0.06);
   /* box-shadow: 0 0 1rem 0 rgba(5, 37, 107, 0.91); */
 }
+
+/*MARK: transparent background?*/
+/* .index-page main {
+  background: transparent;
+}
+.index-page .top-nav {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 1rem;
+} */
 
 /* 
 * specifically for mobile (width <= 500px) 

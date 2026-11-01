@@ -16,7 +16,7 @@
 </head>
 
 <!-- remove `class="debug-layout"` when done fiddling -->
-<body class="debug-layout" style="background-color:rgb(180, 180, 180);">
+<body class="debug-layout index-page">
   <main>
 
     <nav class="top-nav" aria-label="Primary navigation">
@@ -63,12 +63,14 @@
         </p>
     </h3>
     
-    <a class="button" href="app.html" data-i18n="startButton"
-        style="  display: block; margin-left: auto; margin-right: auto; width: 40%; text-align:center;">
+    <!-- <a class="button" id="startButton" class="startbutton" href="app.html" data-i18n="startButton">
       Start
-    </a>
+    </a> -->
   </main>
 
+  <a class="button startbutton" id="startButton" href="app.html" data-i18n="startButton">
+    Start
+  </a>
   <!--MARK: scripts
   notes:  - config.js and register-sw.js need to be loaded early (therefore sitting in head)
           - the remaining scripts need to be ordered by dependence 
