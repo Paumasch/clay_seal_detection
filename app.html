@@ -21,6 +21,7 @@
 
     <nav class="top-nav" aria-label="Primary navigation">
 
+      <!-- width, height are overridden by css, but good to keep here to reduce potential visual jitter on first load -->
       <a class="home-link" href="./index.html" aria-label="Seal Counter home">
         <img
           class="home-logo"
@@ -93,12 +94,10 @@
       </div>
     </section>
 
-    <h3> 
-      <p id="Explainparagraph" class="explain-paragraph" data-i18n="explainParagraph">
-        Press the start camera button when you are read to begin the detection. The camera will open and you can point it at the object you want to detect. The model will then try to detect the object and display the result on the screen.          
-      </p>
-    </h3>
-
+    <!-- to be folded into details -->
+    <p id="Explainparagraph" class="explain-paragraph" data-i18n="explainParagraph">
+      Press the start camera button when you are read to begin the detection. The camera will open and you can point it at the object you want to detect. The model will then try to detect the object and display the result on the screen.          
+    </p>
 
     <!-- to be deleted -->
     <section aria-labelledby="statusHeading">

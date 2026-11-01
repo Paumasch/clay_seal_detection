@@ -35,7 +35,15 @@ vh, vw .. relative to viewport's height/width ("viewport" = window in browser, n
 /* 
 one width to rule them all 
 500px? 
-it's very much mobile-first
+from chrome devtools: 
+iPhone 
+  16 Pro Max  440
+  16          393
+  SE          375
+Pixel 9       412
+Samsung S8    360
+iPad mini     768
+iPad pro 13  1032
 */
 :root {
   --content-width: 500px;
@@ -66,6 +74,21 @@ main {
   border: 1px solid rgba(15, 23, 42, 0.06);
   /* box-shadow: 0 0 1rem 0 rgba(5, 37, 107, 0.91); */
 }
+
+/* 
+* specifically for mobile (width <= 500px) 
+* needs to be below general rules
+*/
+@media (max-width: 500px) {
+  :root {
+    --page-padding: 0.5rem;
+  }
+
+  main {
+    border-radius: 0 0 1.5rem 1.5rem;
+  }
+}
+
 
 /*MARK: shenanigans
 ai-slop
@@ -390,6 +413,7 @@ button {
   margin-left: 0.15rem;
 }
 
+/*MARK: top-nav */
 .top-nav {
   position: relative;
   z-index: 1;
@@ -407,10 +431,10 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 7rem;
+  /* min-width: 7rem; */
   padding: 0.45rem 0rem;
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  border-radius: 999px;
+  /* border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 999px; */
   background: rgba(255, 255, 255, 0.9);
   /* box-shadow: 0 0.45rem 0.85rem rgba(15, 23, 42, 0.06); */
   line-height: 0;
@@ -418,11 +442,23 @@ button {
 
 .home-logo {
   display: block;
-  width: 7.5rem;
-  height: auto;
+  /* width: 7.5rem;
+  height: auto; */
+  height: 2.75rem;
+  width: auto;
   max-height: 2.8rem;
   object-fit: contain;
   filter: drop-shadow(0 0.2rem 0.2rem rgba(15, 23, 42, 0.08));
+}
+
+.Page_Title {
+  position: absolute;
+  left: 50%;
+  margin: 0;
+  transform: translateX(-50%);
+  font-size: 1rem;
+  line-height: 1.2;
+  text-align: center;
 }
 
 .language-area {
@@ -430,6 +466,7 @@ button {
   text-align: right;
 }
 
+/*no longer used? */
 #languageButton {
   font-size: small;
   margin: 0.1rem 0;
@@ -441,6 +478,66 @@ button {
   padding: 0.5rem;
   border: 1px solid currentColor;
 }
+
+.language_selection_dropdown {
+  position: relative;
+  display: inline-block;
+  z-index: 20;
+}
+.lang-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  /* box-shadow: 0 0.35rem 0.7rem rgba(15, 23, 42, 0.06); */
+  cursor: pointer;
+  font: inherit;
+}
+.lang-btn img {
+  display: block;
+  width: 20px;
+  height: 15px;
+  border-radius: 2px;
+}
+#currentLanguageLabel {
+  display: none;
+}
+.lang-caret {
+  font-size: 0.8rem;
+  color: #4b5563;
+}
+#langMenu {
+  position: absolute;
+  right: 0;
+  z-index: 20;
+  margin: 0;
+  padding: 0.25rem;
+  list-style: none;
+  background: #fff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 0.85rem;
+  box-sizing: border-box;
+  box-shadow: 0 0.65rem 1.2rem rgba(15, 23, 42, 0.12);
+}
+#langMenu li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.5rem 0.7rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+#langMenu li:hover,
+#langMenu li:focus-visible {
+  background: #f3f4f6;
+}
+
 
 .back-link {
   display: inline-block;
@@ -476,7 +573,7 @@ button {
   aspect-ratio: 3 / 4;
   margin: -0.25rem 0 1rem;
   overflow: hidden;
-  border-radius: 1.5rem;
+  border-radius: 1rem;
   background: #000;
   box-shadow: inset 0 0 0 1px rgba(17, 24, 39, 0.08);
 }
@@ -489,6 +586,7 @@ button {
   background: #000;
 }
 
+/*MARK: detection-box */
 .detection-overlay {
   position: absolute;
   inset: 0;
