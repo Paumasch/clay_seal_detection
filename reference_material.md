@@ -51,6 +51,14 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Flexible_box_layout/Basi
 more accessible:  
 https://htmlcheatsheet.com/css/  
 
+## basic icons  
+
+custom: https://iconsvg.xyz/ or https://www.svgrepo.com/svg/
+
+or: https://editor.graphite.art/
+
+to account for accessibility: open the .svg file in text editor and add/change `aria-label="Does x"` to first line
+
 
 ## ? 
 

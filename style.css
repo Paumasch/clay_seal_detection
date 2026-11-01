@@ -310,6 +310,7 @@ button {
   --camera-button-scale: 1.25;
   --camera-side-button-size: 4rem;
   --camera-primary-button-size: 4.75rem;
+  --camera-icon-inset: 0.65rem; /* adjust this value */
   position: relative;
   z-index: 2;
   display: grid;
@@ -365,8 +366,8 @@ button {
 
 .controlbutton img {
   display: block;
-  width: 1.2rem;
-  height: 1.2rem;
+  width: calc(100% - (2 * var(--camera-icon-inset)));
+  height: calc(100% - (2 * var(--camera-icon-inset)));
   object-fit: contain;
 }
 
@@ -388,21 +389,11 @@ button {
   box-shadow: 0 0 1rem 0px rgba(5, 37, 107, 0.91);
 }
 
-#liveDetectionButton img {
-  width: calc(1.65rem * var(--camera-button-scale));
-  height: calc(1.65rem * var(--camera-button-scale));
-}
-
 #snapshotButton {
   width: calc(var(--camera-side-button-size) * var(--camera-button-scale));
   height: calc(var(--camera-side-button-size) * var(--camera-button-scale));
   padding: 0;
   border-radius: 50%;
-}
-
-#snapshotButton img {
-  width: calc(1.05rem * var(--camera-button-scale));
-  height: calc(1.05rem * var(--camera-button-scale));
 }
 
 .control-text {
