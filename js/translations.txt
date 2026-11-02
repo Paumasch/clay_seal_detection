@@ -1,0 +1,38 @@
+- it would be easiest if you translated it directly in the code format  
+- just replace "[to_be_translated] Some text." with "Some translated text."
+- da: Danish, kl: Kalaallisut
+
+
+da: {
+    statusReady: "[to_be_translated] Ready.",
+    detectionFailed: "[to_be_translated] Detection failed. Check the console.",
+    cameraAccessFailed: "[to_be_translated] Camera access failed. Check permissions and reload.",
+    liveDetectionRunning: "[to_be_translated] Live detection running",
+    modelLoading: "[to_be_translated] Loading model...",
+    modelLoaded: "[to_be_translated] Model loaded successfully",
+    modelErrorPrefix: "[to_be_translated] Error: ",
+    modelLabels: {
+      seal_adult: "[to_be_translated] seal adult",
+      seal_pup: "[to_be_translated] seal pup"
+    }
+  },
+  kl: {
+    languageSelection: "[to_be_translated] Choose a language:",
+    backButton: "[to_be_translated] Back",
+    cameraControls: "[to_be_translated] Camera controls",
+    resetButton: "[to_be_translated] Reset",
+    statusHeading: "[to_be_translated] Status",
+    statusReady: "[to_be_translated] Ready.",
+    detailsBoxes: "[to_be_translated] The little number next to the green square tells you how confident the model is that this really is a seal (the higher the more confident).",
+    nothingDetected: "[to_be_translated] Nothing detected.",
+    detectionFailed: "[to_be_translated] Detection failed. Check the console.",
+    cameraAccessFailed: "[to_be_translated] Camera access failed. Check permissions and reload.",
+    liveDetectionRunning: "[to_be_translated] Live detection running",
+    modelLoading: "[to_be_translated] Loading model...",
+    modelLoaded: "[to_be_translated] Model loaded successfully",
+    modelErrorPrefix: "[to_be_translated] Error: ",
+    modelLabels: {
+      seal_adult: "[to_be_translated] seal adult",
+      seal_pup: "[to_be_translated] seal pup"
+    }
+  }
