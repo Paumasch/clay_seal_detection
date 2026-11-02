@@ -43,6 +43,6 @@ TO DO LIST FOR WEBSITE
         - [x] adjust Start button 
     - [ ] make it faster 
         - [ ] first add some basic time logging for feedback
-    - [ ] accessibility
-        - [ ] add aria-labels to buttons !!
+    - [?] accessibility
+        - [?] add aria-labels to button svgs?
 
