@@ -11,7 +11,7 @@ TO DO LIST FOR WEBSITE
 -[x] add fjord photo as background photo to index html
 
 //MARK: Karl 
-- [ ] JUST GET IT DONE!
+- [x] JUST GET IT DONE!
     ! ignore offline, service worker nonsense
     - [x] language 
         ! ignore accessibility for now
@@ -22,8 +22,8 @@ TO DO LIST FOR WEBSITE
     - [x] controls 
         - [x] fix mistral's funny business
         - [x] add button to back
-    - [ ] FIX DETECTION
-        - [ ] FIX STRETCH + NMS
+    - [x] FIX DETECTION
+        - [x] FIX STRETCH + NMS
         - [x] enable more than one 
         - [?] automatically adjust "gain"/"sensitivity"
     - [?] improve clarity of UI
@@ -39,6 +39,10 @@ TO DO LIST FOR WEBSITE
         - [?] add dark mode?
         - [x] improve nav bar
         - [x] move explanation to bottom?
+        - [x] fix inconsistent main width
+        - [x] adjust Start button 
     - [ ] make it faster 
         - [ ] first add some basic time logging for feedback
-    - [ ] 
+    - [ ] accessibility
+        - [ ] add aria-labels to buttons !!
+

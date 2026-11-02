@@ -50,6 +50,13 @@ iPad pro 13  1032
   --page-padding: 1rem;
 }
 
+/* to fix the window width on mobile */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: sans-serif;
@@ -70,12 +77,13 @@ body {
   display: block; 
   font-size: large;
   font-weight: bold;
+  padding-inline: 2rem; /* adjust this to adjust button width */
   /* margin-left: auto; 
   margin-right: auto;  */
   margin-inline: auto;
-  width: fit-content; 
+  width: fit-content;
   text-align:center;
-  margin: -1.5rem auto 0;
+  margin: 0.5rem auto 0;
 }
 
 main, footer {
@@ -111,7 +119,7 @@ main {
 */
 @media (max-width: 500px) {
   :root {
-    --page-padding: 0.5rem;
+    --page-padding: 0;
   }
 
   main {
@@ -299,6 +307,9 @@ h2 {
   border: 0;
 }
 
+
+/*MARK: buttons
+*/
 
 button {
   display: inline-block;
