@@ -16,38 +16,21 @@ vh, vw .. relative to viewport's height/width ("viewport" = window in browser, n
   display: none !important;
 }
 
-/*MARK: debug*/
-/* temporary layout debugging */
-/* .debug-layout main,
-.debug-layout footer,
-.debug-layout .top-nav,
-.debug-layout .language_selection_dropdown,
-.debug-layout .viewport {
-  outline: 1px dashed red;
-}
-.debug-layout h1,
-.debug-layout .button,
-.debug-layout .welcome-paragraph,
-.debug-layout .footer-text {
-  outline: 1px dashed blue;
-} */
-
-/* 
-one width to rule them all 
-500px? 
-from chrome devtools: 
-iPhone 
-  16 Pro Max  440
-  16          393
-  SE          375
-Pixel 9       412
-Samsung S8    360
-iPad mini     768
-iPad pro 13  1032
+/*MARK: config
+* variables used for various calculations below
+* moved up here for easier fiddling with
+* call them via `var(--some-variable)` or `calc(var(--some-variable) * 1.2))`
 */
 :root {
   --content-width: 500px;
   --page-padding: 1rem;
+
+  /* camera controls sliders */
+  --camera-button-scale: 1; 
+  --camera-side-button-size: 4rem;
+  --camera-primary-button-size: 4.75rem;
+  --camera-control-gap: 0.85rem; /* gap between buttons */
+  --camera-icon-inset: 0.5rem; /* fiddle with this, maybe */
 }
 
 /* to fix the window width on mobile */
@@ -346,12 +329,9 @@ button {
   margin: 1rem 0;
 }
 
+/*MARK: controls
+*/
 .camera-controls {
-  --camera-control-gap: 0.85rem;
-  --camera-button-scale: 1.25;
-  --camera-side-button-size: 4rem;
-  --camera-primary-button-size: 4.75rem;
-  --camera-icon-inset: 0.65rem; /* adjust this value */
   position: relative;
   z-index: 2;
   display: grid;
@@ -401,6 +381,7 @@ button {
   box-shadow: 0 0 1rem 0px rgba(5, 37, 107, 0.91);
 }
 
+/* doesn't do anything anymore? */
 .controlbutton:active {
   transform: scale(0.97);
 }
