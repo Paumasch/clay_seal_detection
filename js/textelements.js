@@ -120,7 +120,7 @@ const STRINGS = {
 };
 
 //MARK: default language
-const DEFAULT_LANGUAGE = "en";
+const DEFAULT_LANGUAGE = "kl";
 
 const LANGUAGE_NAMES = {
   en: "English",
